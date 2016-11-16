@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "ES5",
+        "declaration": true,
+        "outFile": "./lib/index.js"
+    },
+    "files": [
+        "node_modules/@types/lodash/index.d.ts",
+        "node_modules/powerbi-visuals-tools/templates/visuals/.api/v1.2.0/PowerBI-visuals.d.ts",
+        "src/dataViewTransform.ts",
+        "src/dataRoleHelper.ts",
+        "src/dataViewObject.ts",
+        "src/converterHelper.ts"
+    ]
+}
