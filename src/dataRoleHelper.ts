@@ -36,26 +36,32 @@ module powerbi.extensibility.utils.dataview {
         export function getMeasureIndexOfRole(grouped: DataViewValueColumnGroup[], roleName: string): number {
             if (!_.isEmpty(grouped)) {
                 let firstGroup = grouped[0];
+
                 if (firstGroup.values && firstGroup.values.length > 0) {
                     for (let i = 0, len = firstGroup.values.length; i < len; ++i) {
                         let value = firstGroup.values[i];
+
                         if (value && value.source) {
-                            if (hasRole(value.source, roleName))
+                            if (hasRole(value.source, roleName)) {
                                 return i;
+                            }
                         }
                     }
                 }
             }
+
             return -1;
         }
 
         export function getCategoryIndexOfRole(categories: DataViewCategoryColumn[], roleName: string): number {
             if (!_.isEmpty(categories)) {
                 for (let i = 0, ilen = categories.length; i < ilen; i++) {
-                    if (hasRole(categories[i].source, roleName))
+                    if (hasRole(categories[i].source, roleName)) {
                         return i;
+                    }
                 }
             }
+
             return -1;
         }
 

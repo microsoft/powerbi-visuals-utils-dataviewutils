@@ -26,7 +26,7 @@
 
 /// <reference path="_references.ts"/>
 
-module powerbi1.extensibility.utils.dataview.test {
+module powerbi.extensibility.utils.dataview.test {
     // powerbi
     import DataView = powerbi.DataView;
     import DataViewMetadata = powerbi.DataViewMetadata;

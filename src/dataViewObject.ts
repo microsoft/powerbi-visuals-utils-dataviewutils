@@ -33,8 +33,9 @@ module powerbi.extensibility.utils.dataview {
     export module DataViewObjects {
         /** Gets the value of the given object/property pair. */
         export function getValue<T>(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultValue?: T): T {
-            if (!objects)
+            if (!objects) {
                 return defaultValue;
+            }
 
             let object = objects[propertyId.objectName];
             return DataViewObject.getValue(<IDataViewObject>object, propertyId.propertyName, defaultValue);
@@ -46,16 +47,16 @@ module powerbi.extensibility.utils.dataview {
                 let object = <IDataViewObject>objects[objectName];
                 return object;
             }
-            else {
-                return defaultValue;
-            }
+
+            return defaultValue;
         }
 
         /** Gets the solid color from a fill property. */
         export function getFillColor(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultColor?: string): string {
             let value: Fill = getValue(objects, propertyId);
-            if (!value || !value.solid)
+            if (!value || !value.solid) {
                 return defaultColor;
+            }
 
             return value.solid.color;
         }
@@ -63,12 +64,14 @@ module powerbi.extensibility.utils.dataview {
 
     export module DataViewObject {
         export function getValue<T>(object: IDataViewObject, propertyName: string, defaultValue?: T): T {
-            if (!object)
+            if (!object) {
                 return defaultValue;
+            }
 
             let propertyValue = <T>object[propertyName];
-            if (propertyValue === undefined)
+            if (propertyValue === undefined) {
                 return defaultValue;
+            }
 
             return propertyValue;
         }
@@ -76,8 +79,9 @@ module powerbi.extensibility.utils.dataview {
         /** Gets the solid color from a fill property using only a propertyName */
         export function getFillColorByPropertyName(object: IDataViewObject, propertyName: string, defaultColor?: string): string {
             let value: Fill = getValue(object, propertyName);
-            if (!value || !value.solid)
+            if (!value || !value.solid) {
                 return defaultColor;
+            }
 
             return value.solid.color;
         }

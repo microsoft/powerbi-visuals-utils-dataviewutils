@@ -12,6 +12,7 @@
         "src/dataViewTransform.ts",
         "src/dataRoleHelper.ts",
         "src/dataViewObject.ts",
-        "src/converterHelper.ts"
+        "src/converterHelper.ts",
+        "src/dataViewObjectsParser.ts"
     ]
 }

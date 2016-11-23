@@ -44,11 +44,13 @@ module powerbi.extensibility.utils.dataview {
             let result = <DataViewValueColumns>values;
             setGrouped(result);
 
-            if (valueIdentityFields)
+            if (valueIdentityFields) {
                 result.identityFields = valueIdentityFields;
+            }
 
-            if (source)
+            if (source) {
                 result.source = source;
+            }
 
             return result;
         }
@@ -78,10 +80,11 @@ module powerbi.extensibility.utils.dataview {
                         let source = value.source;
 
                         // allow null, which will be formatted as (Blank).
-                        if (source.groupName !== undefined)
+                        if (source.groupName !== undefined) {
                             currentGroup.name = source.groupName;
-                        else if (source.displayName)
+                        } else if (source.displayName) {
                             currentGroup.name = source.displayName;
+                        }
                     }
 
                     groups.push(currentGroup);
