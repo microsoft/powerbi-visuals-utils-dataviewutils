@@ -14,7 +14,7 @@ To use the package you should have the following things:
 ## Installation
 To install the package you should run the following command in the directory with your current custom visual:
 
-```
+```bash
 npm install powerbi-visuals-utils-dataviewutils --save
 ```
 
