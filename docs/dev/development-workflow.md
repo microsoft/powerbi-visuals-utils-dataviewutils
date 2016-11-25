@@ -3,7 +3,7 @@ If you would like to contribute an improvement or a fix please pay attention to 
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [How to build](#how-to-build)
-* [How lint the source code](#how-lint-the-source-code)
+* [How to lint the source code](#how-to-lint-the-source-code)
 * [How to run unit tests locally](#how-to-run-unit-tests-locally)
 
 ## Requirements

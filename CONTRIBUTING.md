@@ -13,7 +13,7 @@ Before submitting a pull request please make sure the following is done:
 
 1. Fork [the repository](https://github.com/Microsoft/powerbi-visuals-utils-dataviewutils)
 2. Create a branch from the ```master```
-3. Ensure that the code style checks are passed ([How lint the source code](./docs/dev/development-workflow.md#how-lint-the-source-code))
+3. Ensure that the code style checks are passed ([How to lint the source code](./docs/dev/development-workflow.md#how-to-lint-the-source-code))
 4. Ensure that the unit tests are passed ([How to run unit tests locally](./docs/dev/development-workflow.md#how-to-run-unit-tests-locally))
 5. Complete the [CLA](#contributor-license-agreement-cla)
 
