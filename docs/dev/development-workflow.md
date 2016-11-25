@@ -11,7 +11,7 @@ To start development and improvement of the source code you should have the foll
 * [git](https://git-scm.com)
 * [node.js](https://nodejs.org) (we recommend the latest LTS version)
 * [npm](https://www.npmjs.com) (the minimal supported version is 3.0.0)
-* [Google Chrome browser](https://www.google.com/chrome) (it's necessary to run unit test locally)
+* [Google Chrome browser](https://www.google.com/chrome) (it's necessary to run unit tests locally)
 
 ## Installation
 Firstly, you should clone a copy of the repository by using one of the following commands:
@@ -35,7 +35,7 @@ We use [TypeScript](https://github.com/Microsoft/TypeScript) as a language and a
 
 This command compiles TypeScript code to JavaScript and provides declaration file for the Intellisense. The result of the compilation is available in the ```lib``` directory.
 
-## How lint the source code
+## How to lint the source code
 We use [TSLint](https://github.com/palantir/tslint) as a linter for TypeScript code. To check source code you should run the following command:
 
 ```npm run lint```
@@ -43,7 +43,7 @@ We use [TSLint](https://github.com/palantir/tslint) as a linter for TypeScript c
 This command checks style of TypeScript code and provides a list of problems. Please address all of problems reported by TSLint before sending a pull request to the [repository](https://github.com/Microsoft/powerbi-visuals-utils-dataviewutils).
 
 ## How to run unit tests locally
-We use [Jasmine](https://github.com/jasmine/jasmine) and [Karma](https://github.com/karma-runner/karma) to run unit tests. Please note Karma requires Google Chrome to run unit tests.
+We use [Jasmine](https://github.com/jasmine/jasmine) and [Karma](https://github.com/karma-runner/karma) to run unit tests. Please note, Karma requires Google Chrome to run unit tests.
 To run unit tests locally on your machine you should run the following command:
 
 ```npm run test```
