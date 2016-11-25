@@ -1,5 +1,5 @@
 # Microsoft Power BI visuals DataViewUtils
-[![npm version](https://img.shields.io/npm/v/powerbi-visuals-utils-dataviewutils.svg)](https://www.npmjs.com/package/powerbi-visuals-utils-dataviewutils) [![npm](https://img.shields.io/npm/dm/powerbi-visuals-utils-dataviewutils.svg)](https://www.npmjs.com/package/powerbi-visuals-utils-dataviewutils)
+[![Build Status](https://travis-ci.org/Microsoft/powerbi-visuals-utils-dataviewutils.svg?branch=master)](https://travis-ci.org/Microsoft/powerbi-visuals-utils-dataviewutils) [![npm version](https://img.shields.io/npm/v/powerbi-visuals-utils-dataviewutils.svg)](https://www.npmjs.com/package/powerbi-visuals-utils-dataviewutils) [![npm](https://img.shields.io/npm/dm/powerbi-visuals-utils-dataviewutils.svg)](https://www.npmjs.com/package/powerbi-visuals-utils-dataviewutils)
 
 > DataViewUtils is a set of functions and classes in order to simplify parsing of the DataView object for Power BI custom visuals
 
