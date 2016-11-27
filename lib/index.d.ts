@@ -54,3 +54,29 @@ declare module powerbi.extensibility.utils.dataview {
         function hasImageUrlColumn(dataView: DataView): boolean;
     }
 }
+declare module powerbi.extensibility.utils.dataview {
+    import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifier;
+    import DataView = powerbi.DataView;
+    import EnumerateVisualObjectInstancesOptions = powerbi.EnumerateVisualObjectInstancesOptions;
+    import VisualObjectInstanceEnumeration = powerbi.VisualObjectInstanceEnumeration;
+    interface DataViewProperty {
+        [propertyName: string]: DataViewObjectPropertyIdentifier;
+    }
+    interface DataViewProperties {
+        [propertyName: string]: DataViewProperty;
+    }
+    class DataViewObjectsParser {
+        protected static DefaultFillColorNames: string[];
+        private static InnumerablePropertyPrefix;
+        private _fillColorRegExp;
+        constructor(fillColorNames?: string[]);
+        private static createFillColorRegExp(fillColorNames);
+        static getDefault(): DataViewObjectsParser;
+        private static createPropertyIdentifier(objectName, propertyName);
+        static parse<T extends DataViewObjectsParser>(dataView: DataView): T;
+        private static isPropertyEnumerable(propertyName);
+        static enumerateObjectInstances(dataViewObjectParser: DataViewObjectsParser, options: EnumerateVisualObjectInstancesOptions): VisualObjectInstanceEnumeration;
+        private getValueFunctionByPropertyName(propertyName);
+        getProperties(): DataViewProperties;
+    }
+}
