@@ -26,9 +26,11 @@ DataViewObjectsParser.getDefault();
 // returns: an instance of the DataViewObjectsParser
 ```
 
+You can take a look at the example code of the custom visual [here](https://github.com/Microsoft/powerbi-visuals-sankey/blob/4d544ea145b4e15006083a3610dfead3da5f61a4/src/visual.ts#L1143).
+
 ## parse
 
-This method parses properies of the formatting panel and returns an instance of ```DataViewObjectsParser```.
+This method parses properties of the formatting panel and returns an instance of ```DataViewObjectsParser```.
 
 ```typescript
 static parse<T extends DataViewObjectsParser>(dataView: DataView): T;
@@ -70,6 +72,8 @@ export class YourVisual extends IVisual {
     }
 }
 ```
+
+You can take a look at the example code of the custom visual [here](https://github.com/Microsoft/powerbi-visuals-sankey/blob/4d544ea145b4e15006083a3610dfead3da5f61a4/src/visual.ts#L607).
 
 ## enumerateObjectInstances
 
@@ -122,3 +126,5 @@ export class YourVisual extends IVisual {
     }
 }
 ```
+
+You can take a look at the example code of the custom visual [here](https://github.com/Microsoft/powerbi-visuals-sankey/blob/4d544ea145b4e15006083a3610dfead3da5f61a4/src/visual.ts#L1146).
