@@ -1,5 +1,5 @@
-# DataRoleHelper
-> The ```DataViewObject``` provides functions in order to extract values of the object.
+# DataViewObject
+> The ```DataViewObject``` provides functions in order to extract value of the object.
 
 The ```powerbi.extensibility.utils.dataview.DataViewObject``` module provides the following functions:
 
@@ -19,7 +19,7 @@ function getValue<T>(object: IDataViewObject, propertyName: string, defaultValue
 ```typescript
 import DataViewObject = powerbi.extensibility.utils.dataview.DataViewObject;
 
-// This object is actually part of the dataView object.
+// This object is actually a part of the dataView object.
 let object: powerbi.DataViewObject = {
     "windows": 5,
     "microsoft": "Power BI"
@@ -43,7 +43,7 @@ function getFillColorByPropertyName(object: IDataViewObject, propertyName: strin
 ```typescript
 import DataViewObject = powerbi.extensibility.utils.dataview.DataViewObject;
 
-// This object is actually part of the dataView object.
+// This object is actually a part of the dataView object.
 let object: powerbi.DataViewObject = {
     "windows": 5,
     "fillColor": {

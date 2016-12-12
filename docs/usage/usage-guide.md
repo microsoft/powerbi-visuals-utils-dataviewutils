@@ -1,5 +1,5 @@
 # Usage Guide
-> The Usage Guide describes a public API of the package. You will find a description and a few examples for each public interface of the package.
+> The Usage Guide describes a public API of the package. You will find a description and a few examples for each public interface of the package here.
 
 This package contains the following classes, interfaces and methods:
 
