@@ -56,7 +56,7 @@ function getSeriesName(source: DataViewMetadataColumn): PrimitiveValue;
 import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
 import converterHelper = powerbi.extensibility.utils.dataview.converterHelper;
 
-// This object is actually part of the dataView object.
+// This object is actually a part of the dataView object.
 let metadata: DataViewMetadataColumn = {
     displayName: "Microsoft",
     roles: {
@@ -85,7 +85,7 @@ function isImageUrlColumn(column: DataViewMetadataColumn): boolean;
 import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
 import converterHelper = powerbi.extensibility.utils.dataview.converterHelper;
 
-// This object is actually part of the dataView object.
+// This object is actually a part of the dataView object.
 let metadata: DataViewMetadataColumn = {
     displayName: "Microsoft",
     type: {
@@ -114,7 +114,7 @@ function isWebUrlColumn(column: DataViewMetadataColumn): boolean;
 import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
 import converterHelper = powerbi.extensibility.utils.dataview.converterHelper;
 
-// This object is actually part of the dataView object.
+// This object is actually a part of the dataView object.
 let metadata: DataViewMetadataColumn = {
     displayName: "Microsoft",
     type: {

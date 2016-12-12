@@ -52,7 +52,7 @@ This command checks style of TypeScript code and provides a list of problems. Pl
 
 ## How to run unit tests locally
 We use [Jasmine](https://github.com/jasmine/jasmine) and [Karma](https://github.com/karma-runner/karma) to run unit tests. Please note, Karma requires Google Chrome to run unit tests.
-To run unit tests locally on your machine you should run the following command:
+To run unit tests locally on your machine you should execute the following command:
 
 ```bash
 npm run test

@@ -26,7 +26,7 @@ let property: DataViewObjectPropertyIdentifier = {
     propertyName: "bi"
 };
 
-// This object is actually part of the dataView object.
+// This object is actually a part of the dataView object.
 let objects: powerbi.DataViewObjects = {
     "microsoft": {
         "windows": 5,
@@ -52,7 +52,7 @@ function getObject(objects: DataViewObjects, objectName: string, defaultValue?: 
 ```typescript
 import DataViewObjects = powerbi.extensibility.utils.dataview.DataViewObjects;
 
-// This object is actually part of the dataView object.
+// This object is actually a part of the dataView object.
 let objects: powerbi.DataViewObjects = {
     "microsoft": {
         "windows": 5,
@@ -65,7 +65,7 @@ DataViewObjects.getObject(objects, "microsoft");
 /* returns: {
     "bi": "Power",
     "windows": 5
-    
+
 }*/
 ```
 

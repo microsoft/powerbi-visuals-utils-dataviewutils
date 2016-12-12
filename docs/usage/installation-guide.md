@@ -55,4 +55,4 @@ As a result you will have the following file structure:
 }
 ```
 
-That's it. :rocket: :metal: That's a good time to read our [Usage Guide](./usage-guide.md).
+That's it. That's a good time to read our [Usage Guide](./usage-guide.md).

@@ -42,8 +42,8 @@ import DataViewObjectsParser = powerbi.extensibility.utils.dataview.DataViewObje
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 
 /**
- * This class describes properties of the formatting panel.
- * Name of the property and name of the property described in the capabilities should be the same.
+ * This class describes formatting panel properties.
+ * Name of the property should match its name described in the capabilities.
  */
 class DataPointProperties {
     public fillColor: string = "red"; // This value is a default value of the property.
@@ -74,7 +74,7 @@ export class YourVisual extends IVisual {
 ## enumerateObjectInstances
 
 This static method enumerates properties and returns an instance of [VisualObjectInstanceEnumeration](https://github.com/Microsoft/PowerBI-visuals-tools/blob/master/templates/visuals/.api/v1.2.0/PowerBI-visuals.d.ts#L1015).
-We recommend you execute this method in ```enumerateObjectInstances``` method of the visual.
+We recommend you to execute it in ```enumerateObjectInstances``` method of the visual.
 
 ```typescript
 static enumerateObjectInstances(dataViewObjectParser: DataViewObjectsParser, options: EnumerateVisualObjectInstancesOptions): VisualObjectInstanceEnumeration;
@@ -90,8 +90,8 @@ import DataViewObjectsParser = powerbi.extensibility.utils.dataview.DataViewObje
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 
 /**
- * This class describes properties of the formatting panel.
- * Name of the property and name of the property described in the capabilities should be the same.
+ * This class describes formatting panel properties.
+ * Name of the property should match its name described in the capabilities.
  */
 class DataPointProperties {
     public fillColor: string = "red";
@@ -115,7 +115,7 @@ export class YourVisual extends IVisual {
     }
 
     /**
-     * This method will be executed if the formatting panel is open.
+     * This method will be executed only if the formatting panel is open.
      */
     public enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstanceEnumeration {
         return PropertiesParser.enumerateObjectInstances(this.propertiesParser, options);
