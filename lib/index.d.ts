@@ -34,6 +34,7 @@ declare module powerbi.extensibility.utils.dataview {
         function getObject(objects: DataViewObjects, objectName: string, defaultValue?: IDataViewObject): IDataViewObject;
         /** Gets the solid color from a fill property. */
         function getFillColor(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultColor?: string): string;
+        function getCommonValue(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultValue?: any): any;
     }
     module DataViewObject {
         function getValue<T>(object: IDataViewObject, propertyName: string, defaultValue?: T): T;
@@ -66,17 +67,13 @@ declare module powerbi.extensibility.utils.dataview {
         [propertyName: string]: DataViewProperty;
     }
     class DataViewObjectsParser {
-        protected static DefaultFillColorNames: string[];
         private static InnumerablePropertyPrefix;
-        private _fillColorRegExp;
-        constructor(fillColorNames?: string[]);
         private static createFillColorRegExp(fillColorNames);
         static getDefault(): DataViewObjectsParser;
         private static createPropertyIdentifier(objectName, propertyName);
         static parse<T extends DataViewObjectsParser>(dataView: DataView): T;
         private static isPropertyEnumerable(propertyName);
         static enumerateObjectInstances(dataViewObjectParser: DataViewObjectsParser, options: EnumerateVisualObjectInstancesOptions): VisualObjectInstanceEnumeration;
-        private getValueFunctionByPropertyName(propertyName);
         getProperties(): DataViewProperties;
     }
 }
