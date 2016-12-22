@@ -86,7 +86,10 @@ module powerbi.extensibility.utils.dataview {
                 return (value as Fill).solid.color;
             }
 
-            if (!value || (typeof value === "object" && !(value as Fill).solid)) {
+            if (value === undefined
+                || value === null
+                || (typeof value === "object" && !(value as Fill).solid)) {
+
                 return defaultValue;
             }
 
