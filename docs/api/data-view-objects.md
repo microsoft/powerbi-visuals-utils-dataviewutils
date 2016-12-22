@@ -6,6 +6,7 @@ The ```powerbi.extensibility.utils.dataview.DataViewObjects``` module provides t
 * [getValue](#getvalue)
 * [getObject](#getobject)
 * [getFillColor](#getfillcolor)
+* [getCommonValue](#getcommonvalue)
 
 ## getValue
 
@@ -103,4 +104,44 @@ let objects: powerbi.DataViewObjects = {
 DataViewObjects.getFillColor(objects, property);
 
 // returns: yellow
+```
+
+## getCommonValue
+
+This function is a universal function for retrieving the color or value of a given object.
+
+```typescript
+function getCommonValue(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultValue?: any): any;
+```
+
+### Example
+
+```typescript
+import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifier;
+import DataViewObjects = powerbi.extensibility.utils.dataview.DataViewObjects;
+
+let colorProperty: DataViewObjectPropertyIdentifier = {
+    objectName: "power",
+    propertyName: "fillColor"
+};
+
+let biProperty: DataViewObjectPropertyIdentifier = {
+    objectName: "power",
+    propertyName: "bi"
+};
+
+// This object is actually part of the dataView object.
+let objects: powerbi.DataViewObjects = {
+    "power": {
+        "fillColor": {
+            "solid": {
+                "color": "yellow"
+            }
+        },
+        "bi": "Power"
+    }
+};
+
+DataViewObjects.getCommonValue(objects, colorProperty); // returns: yellow
+DataViewObjects.getCommonValue(objects, biProperty); // returns: Power
 ```

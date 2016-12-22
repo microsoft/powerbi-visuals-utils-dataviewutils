@@ -32,33 +32,65 @@ module powerbi.extensibility.utils.dataview {
 
     export module DataViewObjects {
         /** Gets the value of the given object/property pair. */
-        export function getValue<T>(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultValue?: T): T {
+        export function getValue<T>(
+            objects: DataViewObjects,
+            propertyId: DataViewObjectPropertyIdentifier,
+            defaultValue?: T): T {
+
             if (!objects) {
                 return defaultValue;
             }
 
-            let object = objects[propertyId.objectName];
-            return DataViewObject.getValue(<IDataViewObject>object, propertyId.propertyName, defaultValue);
+            return DataViewObject.getValue(
+                objects[propertyId.objectName],
+                propertyId.propertyName,
+                defaultValue);
         }
 
         /** Gets an object from objects. */
-        export function getObject(objects: DataViewObjects, objectName: string, defaultValue?: IDataViewObject): IDataViewObject {
+        export function getObject(
+            objects: DataViewObjects,
+            objectName: string,
+            defaultValue?: IDataViewObject): IDataViewObject {
+
             if (objects && objects[objectName]) {
-                let object = <IDataViewObject>objects[objectName];
-                return object;
+                return objects[objectName];
             }
 
             return defaultValue;
         }
 
         /** Gets the solid color from a fill property. */
-        export function getFillColor(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultColor?: string): string {
-            let value: Fill = getValue(objects, propertyId);
+        export function getFillColor(
+            objects: DataViewObjects,
+            propertyId: DataViewObjectPropertyIdentifier,
+            defaultColor?: string): string {
+
+            const value: Fill = getValue(objects, propertyId);
+
             if (!value || !value.solid) {
                 return defaultColor;
             }
 
             return value.solid.color;
+        }
+
+        export function getCommonValue(
+            objects: DataViewObjects,
+            propertyId: DataViewObjectPropertyIdentifier,
+            defaultValue?: any): any {
+
+            const value: any = getValue(objects, propertyId, defaultValue);
+
+            if (value && (value as Fill).solid) {
+                return (value as Fill).solid.color;
+            }
+
+            if (!value || (typeof value === "object" && !(value as Fill).solid)) {
+                return defaultValue;
+            }
+
+            return value;
         }
     }
 

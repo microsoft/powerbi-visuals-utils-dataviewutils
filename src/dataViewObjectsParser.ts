@@ -33,10 +33,6 @@ module powerbi.extensibility.utils.dataview {
     import VisualObjectInstanceEnumeration = powerbi.VisualObjectInstanceEnumeration;
     import VisualObjectInstance = powerbi.VisualObjectInstance;
 
-    interface GetValueFunctionPrototype {
-        (objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultColor?: string): any;
-    }
-
     export interface DataViewProperty {
         [propertyName: string]: DataViewObjectPropertyIdentifier;
     }
@@ -46,22 +42,7 @@ module powerbi.extensibility.utils.dataview {
     }
 
     export class DataViewObjectsParser {
-        protected static DefaultFillColorNames: string[] = [
-            "fillColor",
-            "color",
-            "fill",
-            "labelColor",
-            "axisColor"
-        ];
-
         private static InnumerablePropertyPrefix: RegExp = /^_/;
-
-        private _fillColorRegExp: RegExp;
-
-        constructor(fillColorNames: string[] = []) {
-            this._fillColorRegExp = DataViewObjectsParser.createFillColorRegExp(
-                DataViewObjectsParser.DefaultFillColorNames.concat(fillColorNames));
-        }
 
         private static createFillColorRegExp(fillColorNames: string[]): RegExp {
             let formattedFillColorNames: string = fillColorNames
@@ -98,12 +79,9 @@ module powerbi.extensibility.utils.dataview {
 
             for (let objectName in properties) {
                 for (let propertyName in properties[objectName]) {
-                    let defaultValue: any = dataViewObjectParser[objectName][propertyName],
-                        getValueFunction: GetValueFunctionPrototype;
+                    const defaultValue: any = dataViewObjectParser[objectName][propertyName];
 
-                    getValueFunction = dataViewObjectParser.getValueFunctionByPropertyName(propertyName);
-
-                    dataViewObjectParser[objectName][propertyName] = getValueFunction(
+                    dataViewObjectParser[objectName][propertyName] = DataViewObjects.getCommonValue(
                         dataView.metadata.objects,
                         properties[objectName][propertyName],
                         defaultValue);
@@ -142,14 +120,6 @@ module powerbi.extensibility.utils.dataview {
             return {
                 instances: [instance]
             };
-        }
-
-        private getValueFunctionByPropertyName(propertyName: string): GetValueFunctionPrototype {
-            if (this._fillColorRegExp.test(propertyName)) {
-                return DataViewObjects.getFillColor;
-            }
-
-            return DataViewObjects.getValue;
         }
 
         public getProperties(): DataViewProperties {
