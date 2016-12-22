@@ -47,7 +47,7 @@ module powerbi.extensibility.utils.dataview.test {
 
         function createDataViewObjects(
             generalFillColor: string = fillColor,
-            generalFontSize: number = fontSize): DataViewObjects {
+            generalFontSize: any = fontSize): DataViewObjects {
 
             return {
                 [groupName]: {
@@ -99,6 +99,18 @@ module powerbi.extensibility.utils.dataview.test {
                     defaultValue);
 
                 expect(actualValue).toBe(defaultValue);
+            });
+
+            it("should return false is the property defined as false", () => {
+                const expectedValue: boolean = false,
+                    objects: DataViewObjects = createDataViewObjects(null, expectedValue);
+
+                const actualValue: string = DataViewObjects.getCommonValue(
+                    objects,
+                    fontSizeProperty,
+                    "Power BI");
+
+                expect(actualValue).toBe(expectedValue);
             });
         });
     });
