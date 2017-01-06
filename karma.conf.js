@@ -26,8 +26,10 @@
 
 'use strict';
 
-const recursivePathToTests = 'test/**/*.ts'
-    , srcRecursivePath = 'lib/**/*.js';
+const testRecursivePath = 'test/**/*.ts'
+    , srcOriginalRecursivePath = 'src/**/*.ts'
+    , srcRecursivePath = 'lib/**/*.js'
+    , coverageFolder = 'coverage';
 
 module.exports = (config) => {
     let browsers = [];
@@ -57,11 +59,16 @@ module.exports = (config) => {
         files: [
             'node_modules/lodash/lodash.min.js',
             srcRecursivePath,
-            recursivePathToTests
+            testRecursivePath,
+            {
+                pattern: srcOriginalRecursivePath,
+                included: false,
+                served: true
+            }
         ],
         preprocessors: {
-            [recursivePathToTests]: ['typescript'],
-            [srcRecursivePath]: ['coverage']
+            [testRecursivePath]: ['typescript'],
+            [srcRecursivePath]: ['sourcemap', 'coverage']
         },
         typescriptPreprocessor: {
             options: {
@@ -69,18 +76,19 @@ module.exports = (config) => {
                 target: 'ES5',
                 removeComments: false,
                 concatenateOutput: false
-            },
-            transformPath: (path) => {
-                return path.replace(/\.ts$/, '.js');
             }
         },
         coverageReporter: {
-            type: 'html',
-            dir: 'coverage/'
+            dir: coverageFolder,
+            reporters: [
+                { type: 'html' },
+                { type: 'lcov' }
+            ]
         },
         remapIstanbulReporter: {
             reports: {
-                html: 'coverage'
+                lcovonly: coverageFolder + '/lcov.info',
+                html: coverageFolder
             }
         }
     });
