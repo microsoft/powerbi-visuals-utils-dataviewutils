@@ -27,7 +27,7 @@
 'use strict';
 
 const recursivePathToTests = 'test/**/*.ts'
-    , indexFile = 'lib/index.js';
+    , srcRecursivePath = 'lib/**/*.js';
 
 module.exports = (config) => {
     let browsers = [];
@@ -48,15 +48,20 @@ module.exports = (config) => {
         browsers: browsers,
         colors: true,
         frameworks: ['jasmine'],
-        reporters: ['progress'],
+        reporters: [
+            'progress',
+            'coverage',
+            'karma-remap-istanbul'
+        ],
         singleRun: true,
         files: [
             'node_modules/lodash/lodash.min.js',
-            indexFile,
+            srcRecursivePath,
             recursivePathToTests
         ],
         preprocessors: {
-            [recursivePathToTests]: ['typescript']
+            [recursivePathToTests]: ['typescript'],
+            [srcRecursivePath]: ['coverage']
         },
         typescriptPreprocessor: {
             options: {
@@ -67,6 +72,15 @@ module.exports = (config) => {
             },
             transformPath: (path) => {
                 return path.replace(/\.ts$/, '.js');
+            }
+        },
+        coverageReporter: {
+            type: 'html',
+            dir: 'coverage/'
+        },
+        remapIstanbulReporter: {
+            reports: {
+                html: 'coverage'
             }
         }
     });
