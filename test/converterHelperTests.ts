@@ -34,32 +34,227 @@ module powerbi.extensibility.utils.dataview.test {
     import converterHelper = powerbi.extensibility.utils.dataview.converterHelper;
     import DataViewTransform = powerbi.extensibility.utils.dataview.DataViewTransform;
 
-    describe("converterHelper tests", () => {
-        let dataViewBuilder: DataViewBuilder;
-        let dataView: DataViewCategorical;
+    describe("converterHelper", () => {
+        describe("categoryIsAlsoSeriesRole", () => {
+            let dataViewBuilder: DataViewBuilder,
+                dataView: DataViewCategorical;
 
-        beforeEach(() => {
-            dataViewBuilder = new DataViewBuilder(["a", "b"], [100, 200]);
-            dataView = dataViewBuilder.build();
+            beforeEach(() => {
+                dataViewBuilder = new DataViewBuilder(
+                    ["a", "b"],
+                    [100, 200]);
+
+                dataView = dataViewBuilder.build();
+            });
+
+            it("default", () => {
+                expect(converterHelper.categoryIsAlsoSeriesRole(
+                    dataView,
+                    "Series",
+                    "Category")).toBeFalsy();
+
+                // Only a "Series" role prevents us from using the Default strategy
+                dataViewBuilder.buildWithUpdateRoles({
+                    "Category": true
+                });
+
+                expect(converterHelper.categoryIsAlsoSeriesRole(
+                    dataView,
+                    "Series",
+                    "Category")).toBeFalsy();
+
+                dataView = dataViewBuilder.buildWithUpdateRoles({
+                    "E === mc^2": true
+                });
+
+                expect(converterHelper.categoryIsAlsoSeriesRole(
+                    dataView,
+                    "Series",
+                    "Category")).toBeFalsy();
+            });
+
+            it("series and category", () => {
+                dataView = dataViewBuilder.buildWithUpdateRoles({
+                    "Series": true,
+                    "Category": true
+                });
+
+                expect(converterHelper.categoryIsAlsoSeriesRole(
+                    dataView,
+                    "Series",
+                    "Category")).toBe(true);
+
+                dataView = dataViewBuilder.buildWithUpdateRoles({
+                    "Series": true,
+                    "F === ma": true,
+                    "Category": true
+                });
+
+                expect(converterHelper.categoryIsAlsoSeriesRole(
+                    dataView,
+                    "Series",
+                    "Category")).toBe(true);
+            });
+
+            it("should return false if categories are empty", () => {
+                const categorical: DataViewCategorical = {
+                    categories: []
+                };
+
+                const actualResult: boolean = converterHelper.categoryIsAlsoSeriesRole(
+                    categorical,
+                    undefined,
+                    undefined);
+
+                expect(actualResult).toBeFalsy();
+            });
         });
 
-        it("categoryIsAlsoSeriesRole default", () => {
-            expect(converterHelper.categoryIsAlsoSeriesRole(dataView, "Series", "Category")).toBeFalsy();
+        describe("getSeriesName", () => {
+            it("should return the groupName if it's defined", () => {
+                const groupName: string = "Power BI",
+                    metadata: DataViewMetadataColumn = {
+                        displayName: undefined,
+                        groupName
+                    };
 
-            // Only a "Series" role prevents us from using the Default strategy
-            dataViewBuilder.buildWithUpdateRoles({ "Category": true });
-            expect(converterHelper.categoryIsAlsoSeriesRole(dataView, "Series", "Category")).toBeFalsy();
+                const actualSeriesName: string = converterHelper
+                    .getSeriesName(metadata) as string;
 
-            dataView = dataViewBuilder.buildWithUpdateRoles({ "E === mc^2": true });
-            expect(converterHelper.categoryIsAlsoSeriesRole(dataView, "Series", "Category")).toBeFalsy();
+                expect(actualSeriesName).toBe(groupName);
+            });
+
+            it("should return the queryName if it's defined", () => {
+                const queryName: string = "Power BI",
+                    metadata: DataViewMetadataColumn = {
+                        displayName: undefined,
+                        queryName
+                    };
+
+                const actualSeriesName: string = converterHelper
+                    .getSeriesName(metadata) as string;
+
+                expect(actualSeriesName).toBe(queryName);
+            });
         });
 
-        it("categoryIsAlsoSeriesRole series and category", () => {
-            dataView = dataViewBuilder.buildWithUpdateRoles({ "Series": true, "Category": true });
-            expect(converterHelper.categoryIsAlsoSeriesRole(dataView, "Series", "Category")).toBe(true);
+        describe("getMiscellaneousTypeDescriptor", () => {
+            it("should return the misc object", () => {
+                const misc: MiscellaneousTypeDescriptor = { image: true },
+                    metadata: DataViewMetadataColumn = {
+                        displayName: undefined,
+                        type: { misc }
+                    };
 
-            dataView = dataViewBuilder.buildWithUpdateRoles({ "Series": true, "F === ma": true, "Category": true });
-            expect(converterHelper.categoryIsAlsoSeriesRole(dataView, "Series", "Category")).toBe(true);
+                const actualMisc: MiscellaneousTypeDescriptor = converterHelper
+                    .getMiscellaneousTypeDescriptor(metadata);
+
+                expect(actualMisc).toBe(misc);
+            });
+        });
+
+        describe("isImageUrlColumn", () => {
+            it("should return false if the misc is undefined", () => {
+                const actualImageUrl: boolean = converterHelper.isImageUrlColumn(undefined);
+
+                expect(actualImageUrl).toBeFalsy();
+            });
+
+            it("should return true if the imageUrl is defined", () => {
+                const misc: MiscellaneousTypeDescriptor = { imageUrl: true },
+                    metadata: DataViewMetadataColumn = {
+                        displayName: undefined,
+                        type: { misc }
+                    };
+
+                const actualImageUrl: boolean = converterHelper.isImageUrlColumn(metadata);
+
+                expect(actualImageUrl).toBe(misc.imageUrl);
+            });
+        });
+
+        describe("isWebUrlColumn", () => {
+            it("should return false if the misc is undefined", () => {
+                const actualImageUrl: boolean = converterHelper.isWebUrlColumn(undefined);
+
+                expect(actualImageUrl).toBeFalsy();
+            });
+
+            it("should return true if the webUrl  is defined", () => {
+                const misc: MiscellaneousTypeDescriptor = { webUrl: true },
+                    metadata: DataViewMetadataColumn = {
+                        displayName: undefined,
+                        type: { misc }
+                    };
+
+                const actualWebUrl: boolean = converterHelper.isWebUrlColumn(metadata);
+
+                expect(actualWebUrl).toBe(misc.webUrl);
+            });
+        });
+
+        describe("hasImageUrlColumn", () => {
+            it("should return false if the dataView is undefined", () => {
+                const hasImageUrlColumn: boolean = converterHelper.hasImageUrlColumn(undefined);
+
+                expect(hasImageUrlColumn).toBeFalsy();
+            });
+
+            it("should return false if the dataView.metadata is undefined", () => {
+                const dataView: DataView = {
+                    metadata: undefined
+                };
+
+                const hasImageUrlColumn: boolean = converterHelper.hasImageUrlColumn(dataView);
+
+                expect(hasImageUrlColumn).toBeFalsy();
+            });
+
+            it("should return false if the dataView.metadata.columns is undefined", () => {
+                const dataView: DataView = {
+                    metadata: {
+                        columns: undefined
+                    }
+                };
+
+                const hasImageUrlColumn: boolean = converterHelper.hasImageUrlColumn(dataView);
+
+                expect(hasImageUrlColumn).toBeFalsy();
+            });
+
+            it("should return false if the imageUrl isn't available in the dataView", () => {
+                const dataView: DataView = getDataView();
+
+                const hasImageUrlColumn: boolean = converterHelper.hasImageUrlColumn(dataView);
+
+                expect(hasImageUrlColumn).toBeFalsy();
+            });
+
+            it("should return true if the imageUrl is available in the dataView", () => {
+                const expectedResult: boolean = true,
+                    dataView: DataView = getDataView(expectedResult);
+
+                const hasImageUrlColumn: boolean = converterHelper.hasImageUrlColumn(dataView);
+
+                expect(hasImageUrlColumn).toBe(expectedResult);
+            });
+
+            function getDataView(imageUrl: boolean = false): DataView {
+                return {
+                    metadata: {
+                        columns: [{
+                            displayName: "",
+                        }, {
+                            displayName: "",
+                            type: {
+                                misc: {
+                                    imageUrl
+                                }
+                            }
+                        }]
+                    }
+                };
+            }
         });
     });
 

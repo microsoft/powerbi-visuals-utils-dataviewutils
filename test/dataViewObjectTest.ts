@@ -27,91 +27,95 @@
 /// <reference path="_references.ts"/>
 
 module powerbi.extensibility.utils.dataview.test {
+    // powerbi
+    import IDataViewObject = powerbi.DataViewObject;
+
     // powerbi.extensibility.utils.dataview
-    import DataViewObjects = powerbi.extensibility.utils.dataview.DataViewObjects;
+    import DataViewObject = powerbi.extensibility.utils.dataview.DataViewObject;
 
-    describe("DataViewObjects", () => {
-        const fillColor: string = "green",
-            fontSize: number = 22,
-            groupName: string = "general",
-            fillColorName: string = "fillColor",
-            fontSizeName: string = "fontSize",
-            fillColorProperty: DataViewObjectPropertyIdentifier = {
-                objectName: groupName,
-                propertyName: fillColorName
-            },
-            fontSizeProperty: DataViewObjectPropertyIdentifier = {
-                objectName: groupName,
-                propertyName: fontSizeName
-            };
+    describe("DataViewObject", () => {
+        const fontSizePropertyName: string = "fontSize",
+            fillColorPropertyName: string = "fillColor",
+            fontSize: string = "11em",
+            fillColor: string = "green";
 
-        function createDataViewObjects(
-            generalFillColor: string = fillColor,
-            generalFontSize: any = fontSize): DataViewObjects {
+        function getDataViewObject(
+            fontSize: any,
+            fillColor: string): IDataViewObject {
 
             return {
-                [groupName]: {
-                    [fillColorName]: { solid: { color: generalFillColor } },
-                    [fontSizeName]: generalFontSize
-                }
+                [fontSizePropertyName]: fontSize,
+                [fillColorPropertyName]: { solid: { color: fillColor } }
             };
         }
 
-        describe("getCommonValue", () => {
-            it("should return the correct color", () => {
-                const objects: DataViewObjects = createDataViewObjects();
+        describe("getValue", () => {
+            it("should return the default value if the object is undefined", () => {
+                const actualFontSize: string = DataViewObject.getValue(
+                    undefined,
+                    undefined,
+                    fontSize);
 
-                const actualValue: string = DataViewObjects.getCommonValue(
-                    objects,
-                    fillColorProperty);
-
-                expect(actualValue).toBe(fillColor);
+                expect(actualFontSize).toBe(fontSize);
             });
 
-            it("should return the default value if property is undefined", () => {
-                const objects: DataViewObjects = {};
+            it("should return the default value if the property isn't available in the object", () => {
+                const object: IDataViewObject = getDataViewObject(fontSize, fontSize);
 
-                const actualValue: string = DataViewObjects.getCommonValue(
-                    objects,
-                    fillColorProperty,
+                const actualFontSize: string = DataViewObject.getValue(
+                    object,
+                    "Power BI",
+                    fontSize);
+
+                expect(actualFontSize).toBe(fontSize);
+            });
+        });
+
+        describe("getFillColorByPropertyName", () => {
+            it("should return a default color if the object is undefined", () => {
+                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                    undefined,
+                    undefined,
                     fillColor);
 
-                expect(actualValue).toBe(fillColor);
+                expect(actualFillColor).toBe(fillColor);
             });
 
-            it("should return the correct value", () => {
-                const objects: DataViewObjects = createDataViewObjects();
+            it("should return a default color if property isn't available in the object", () => {
+                const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
 
-                const actualValue: string = DataViewObjects.getCommonValue(
-                    objects,
-                    fontSizeProperty);
+                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                    object,
+                    "Power BI",
+                    fillColor);
 
-                expect(actualValue).toBe(fontSize);
+                expect(actualFillColor).toBe(fillColor);
             });
 
-            it("should return value of the default value if object is an empty object and default value is null", () => {
-                const objects: DataViewObjects = {},
-                    defaultValue: any = null;
+            it("should return a default color if the solid is undefined", () => {
+                const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
 
-                const actualValue: string = DataViewObjects.getCommonValue(
-                    objects,
-                    fontSizeProperty,
-                    defaultValue);
+                object[fillColorPropertyName]["solid"] = undefined;
 
-                expect(actualValue).toBe(defaultValue);
+                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                    object,
+                    fillColorPropertyName,
+                    fillColor);
+
+                expect(actualFillColor).toBe(fillColor);
             });
 
-            it("should return false is the property defined as false", () => {
-                const expectedValue: boolean = false,
-                    objects: DataViewObjects = createDataViewObjects(null, expectedValue);
+            it("should return the color", () => {
+                const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
 
-                const actualValue: string = DataViewObjects.getCommonValue(
-                    objects,
-                    fontSizeProperty,
-                    "Power BI");
+                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                    object,
+                    fillColorPropertyName);
 
-                expect(actualValue).toBe(expectedValue);
+                expect(actualFillColor).toBe(fillColor);
             });
         });
     });
+
+
 }
