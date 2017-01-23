@@ -62,12 +62,12 @@ module powerbi.extensibility.utils.dataview {
         }
 
         /** Group together the values with a common identity. */
-        function groupValues(values: DataViewValueColumn[]): DataViewValueColumnGroup[] {
+        export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnGroup[] {
             let groups: DataViewValueColumnGroup[] = [],
                 currentGroup: DataViewValueColumnGroup;
 
             for (let i = 0, len = values.length; i < len; i++) {
-                let value = values[i];
+                let value: DataViewValueColumn = values[i];
 
                 if (!currentGroup || currentGroup.identity !== value.identity) {
                     currentGroup = {
@@ -77,7 +77,7 @@ module powerbi.extensibility.utils.dataview {
                     if (value.identity) {
                         currentGroup.identity = value.identity;
 
-                        let source = value.source;
+                        let source: DataViewMetadataColumn = value.source;
 
                         // allow null, which will be formatted as (Blank).
                         if (source.groupName !== undefined) {

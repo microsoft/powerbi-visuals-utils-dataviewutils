@@ -76,19 +76,25 @@ module powerbi.extensibility.utils.dataview.test {
         });
 
         describe("parse", () => {
-            let properties: DataViewObjectsParserWithProperties;
-
-            beforeEach(() => {
-                properties = DataViewObjectsParserWithProperties
-                    .parse<DataViewObjectsParserWithProperties>(createDataView());
-            });
-
             it("should return the correct color value", () => {
+                const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
+                    .parse<DataViewObjectsParserWithProperties>(createDataView());
+
                 expect(properties.general.fillColor).toBe(fillColor);
             });
 
             it("should return the correct value", () => {
+                const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
+                    .parse<DataViewObjectsParserWithProperties>(createDataView());
+
                 expect(properties.general.precision).toBe(precision);
+            });
+
+            it("should return default settings if the dataView is undefined", () => {
+                const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
+                    .parse<DataViewObjectsParserWithProperties>(null);
+
+                expect(properties).toBeDefined();
             });
         });
 

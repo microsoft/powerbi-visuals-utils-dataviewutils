@@ -35,114 +35,230 @@ module powerbi.extensibility.utils.dataview.test {
     import DataRoleHelper = powerbi.extensibility.utils.dataview.DataRoleHelper;
     import DataViewTransform = powerbi.extensibility.utils.dataview.DataViewTransform;
 
-    describe("dataRoleHelper tests", () => {
-        let dataViewBuilder: DataViewBuilder;
+    describe("DataRoleHelper", () => {
+        describe("getMeasureIndexOfRole", () => {
+            let dataViewBuilder: DataViewBuilder;
 
-        beforeEach(() => {
-            dataViewBuilder = new DataViewBuilder();
+            beforeEach(() => {
+                dataViewBuilder = new DataViewBuilder();
 
-            dataViewBuilder.categoriesValues = ["Montana", "California", "Arizona"];
-            dataViewBuilder.values = [
-                [-100, 200, 700],
-                [1, 2, 3],
-                [4, 5, 6]
-            ];
-        });
+                dataViewBuilder.categoriesValues = ["Montana", "California", "Arizona"];
+                dataViewBuilder.values = [
+                    [-100, 200, 700],
+                    [1, 2, 3],
+                    [4, 5, 6]
+                ];
+            });
 
-        it("getMeasureIndexOfRole with roles validation", () => {
-            dataViewBuilder.columns = [
-                {displayName: "col1"},
-                {displayName: "col2", isMeasure: true, roles: {"Size": true}},
-                {displayName: "col3", isMeasure: true, roles: {"X": true}},
-                {displayName: "col4", isMeasure: true, roles: {"Y": true}}
-            ];
-
-            let dataView: DataView = dataViewBuilder.build();
-
-            let grouped = dataView.categorical.values.grouped();
-
-            let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "InvalidRoleName");
-            expect(result).toBe(-1);
-
-            result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
-            expect(result).toBe(0);
-
-            result = DataRoleHelper.getMeasureIndexOfRole(grouped, "X");
-            expect(result).toBe(1);
-
-            result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Y");
-            expect(result).toBe(2);
-        });
-
-        it("getMeasureIndexOfRole without roles validation", () => {
-            dataViewBuilder.columns = [
-                { displayName: "col1" },
-                { displayName: "col2", isMeasure: true },
-                { displayName: "col3", isMeasure: true },
-                { displayName: "col4", isMeasure: true }
-            ];
-
-            let dataView: DataView = dataViewBuilder.build();
-
-            let grouped = dataView.categorical.values.grouped();
-
-            let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "InvalidRoleName");
-            expect(result).toBe(-1);
-
-            result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
-            expect(result).toBe(-1);
-
-            result = DataRoleHelper.getMeasureIndexOfRole(grouped, "X");
-            expect(result).toBe(-1);
-
-            result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Y");
-            expect(result).toBe(-1);
-        });
-
-        it("getMeasureIndexOfRole without roles validation with default", () => {
-            dataViewBuilder.columns = [
-                {displayName: "col1"},
-                {displayName: "col2", isMeasure: true},
-                {displayName: "col3", isMeasure: true},
-                {displayName: "col4", isMeasure: true}
-            ];
-
-            let dataView: DataView = dataViewBuilder.build();
-
-            let grouped = dataView.categorical.values.grouped();
-
-            let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
-            expect(result).toBe(-1);
-        });
-
-        it("getMeasureIndexOfRole without roles validation with default too few measures", () => {
-            dataViewBuilder.values = [[-1, 2, 3]];
-
-            dataViewBuilder.columns = [
-                {displayName: "col1"},
-                {displayName: "col2", isMeasure: true}
-            ];
-
-            let dataView: DataView = dataViewBuilder.build();
-
-            let grouped = dataView.categorical.values.grouped();
-
-            let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "2nd measure");
-            expect(result).toBe(-1);
-        });
-
-        it("hasRoleInDataView", () => {
-            let dataViewMetadata: DataViewMetadata = {
-                columns: [
-                    { displayName: "col1", roles: { "Series": true } },
+            it("getMeasureIndexOfRole with roles validation", () => {
+                dataViewBuilder.columns = [
+                    { displayName: "col1" },
                     { displayName: "col2", isMeasure: true, roles: { "Size": true } },
-                ]
-            };
-            let dataView: DataView = {
-                metadata: dataViewMetadata
-            };
-            expect(DataRoleHelper.hasRoleInDataView(dataView, "Series")).toBe(true);
-            expect(DataRoleHelper.hasRoleInDataView(dataView, "Category")).toBe(false);
+                    { displayName: "col3", isMeasure: true, roles: { "X": true } },
+                    { displayName: "col4", isMeasure: true, roles: { "Y": true } }
+                ];
+
+                let dataView: DataView = dataViewBuilder.build();
+
+                let grouped = dataView.categorical.values.grouped();
+
+                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "InvalidRoleName");
+                expect(result).toBe(-1);
+
+                result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
+                expect(result).toBe(0);
+
+                result = DataRoleHelper.getMeasureIndexOfRole(grouped, "X");
+                expect(result).toBe(1);
+
+                result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Y");
+                expect(result).toBe(2);
+            });
+
+            it("getMeasureIndexOfRole without roles validation", () => {
+                dataViewBuilder.columns = [
+                    { displayName: "col1" },
+                    { displayName: "col2", isMeasure: true },
+                    { displayName: "col3", isMeasure: true },
+                    { displayName: "col4", isMeasure: true }
+                ];
+
+                let dataView: DataView = dataViewBuilder.build();
+
+                let grouped = dataView.categorical.values.grouped();
+
+                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "InvalidRoleName");
+                expect(result).toBe(-1);
+
+                result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
+                expect(result).toBe(-1);
+
+                result = DataRoleHelper.getMeasureIndexOfRole(grouped, "X");
+                expect(result).toBe(-1);
+
+                result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Y");
+                expect(result).toBe(-1);
+            });
+
+            it("getMeasureIndexOfRole without roles validation with default", () => {
+                dataViewBuilder.columns = [
+                    { displayName: "col1" },
+                    { displayName: "col2", isMeasure: true },
+                    { displayName: "col3", isMeasure: true },
+                    { displayName: "col4", isMeasure: true }
+                ];
+
+                let dataView: DataView = dataViewBuilder.build();
+
+                let grouped = dataView.categorical.values.grouped();
+
+                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
+                expect(result).toBe(-1);
+            });
+
+            it("getMeasureIndexOfRole without roles validation with default too few measures", () => {
+                dataViewBuilder.values = [[-1, 2, 3]];
+
+                dataViewBuilder.columns = [
+                    { displayName: "col1" },
+                    { displayName: "col2", isMeasure: true }
+                ];
+
+                let dataView: DataView = dataViewBuilder.build();
+
+                let grouped = dataView.categorical.values.grouped();
+
+                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "2nd measure");
+                expect(result).toBe(-1);
+            });
+        });
+
+        describe("hasRoleInDataView", () => {
+            it("should return true is the role is available", () => {
+                const dataView: DataView = getDataView();
+
+                expect(DataRoleHelper.hasRoleInDataView(dataView, "Series")).toBe(true);
+            });
+
+            it("should return false is the role isn't available", () => {
+                const dataView: DataView = getDataView();
+
+                expect(DataRoleHelper.hasRoleInDataView(dataView, "Category")).toBe(false);
+            });
+
+            function getDataView(): DataView {
+                return {
+                    metadata: {
+                        columns: [
+                            {
+                                displayName: "col1",
+                                roles: { "Series": true }
+                            },
+                            {
+                                displayName: "col2",
+                                isMeasure: true,
+                                roles: { "Size": true }
+                            }
+                        ]
+                    }
+                };
+            }
+        });
+
+        describe("getCategoryIndexOfRole", () => {
+            const seriesRoleName: string = "Series",
+                sizeRoleName: string = "Size";
+
+            it("should return -1 if the categories is empty", () => {
+                const expectedIndex: number = -1;
+
+                const actualIndex: number = DataRoleHelper.getCategoryIndexOfRole([], undefined);
+
+                expect(actualIndex).toBe(expectedIndex);
+            });
+
+            it("should return -1 if the role isn't available", () => {
+                const expectedIndex: number = -1,
+                    categoryColumns: DataViewCategoricalColumn[] = getCategoryColumns(
+                        seriesRoleName,
+                        sizeRoleName);
+
+                const actualIndex: number = DataRoleHelper.getCategoryIndexOfRole(
+                    categoryColumns,
+                    "Power BI");
+
+                expect(actualIndex).toBe(expectedIndex);
+            });
+
+            it("should return -1 if the role isn't available", () => {
+                const expectedIndex: number = 1,
+                    categoryColumns: DataViewCategoricalColumn[] = getCategoryColumns(
+                        seriesRoleName,
+                        sizeRoleName);
+
+                const actualIndex: number = DataRoleHelper.getCategoryIndexOfRole(
+                    categoryColumns,
+                    sizeRoleName);
+
+                expect(actualIndex).toBe(expectedIndex);
+            });
+
+            function getCategoryColumns(
+                seriesRoleName: string,
+                sizeRoleName: string): DataViewCategoricalColumn[] {
+
+                return [{
+                    source: {
+                        displayName: "col1",
+                        roles: { [seriesRoleName]: true }
+                    },
+                    values: []
+                },
+                {
+                    source: {
+                        displayName: "col2",
+                        isMeasure: true,
+                        roles: { [sizeRoleName]: true }
+                    },
+                    values: []
+                }];
+            }
+        });
+
+        describe("hasRoleInValueColumn", () => {
+            const roleName: string = "Series";
+
+            it("should return false if role name is undefined", () => {
+                const valueColumn: DataViewValueColumn = getValueColumn(roleName);
+
+                const hasRole: boolean = DataRoleHelper.hasRoleInValueColumn(
+                    valueColumn,
+                    "Power BI");
+
+                expect(hasRole).toBeFalsy();
+            });
+
+            it("should return true if role name is available", () => {
+                const valueColumn: DataViewValueColumn = getValueColumn(roleName);
+
+                const hasRole: boolean = DataRoleHelper.hasRoleInValueColumn(
+                    valueColumn,
+                    roleName);
+
+                expect(hasRole).toBeTruthy();
+            });
+
+            function getValueColumn(roleName: string): DataViewValueColumn {
+                return {
+                    source: {
+                        displayName: "",
+                        roles: {
+                            [roleName]: true
+                        }
+                    },
+                    values: []
+                };
+            }
         });
     });
 

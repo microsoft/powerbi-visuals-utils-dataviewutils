@@ -64,7 +64,7 @@ module powerbi.extensibility.utils.dataview {
             return misc != null && misc.webUrl === true;
         }
 
-        function getMiscellaneousTypeDescriptor(column: DataViewMetadataColumn): MiscellaneousTypeDescriptor {
+        export function getMiscellaneousTypeDescriptor(column: DataViewMetadataColumn): MiscellaneousTypeDescriptor {
             return column
                 && column.type
                 && column.type.misc;

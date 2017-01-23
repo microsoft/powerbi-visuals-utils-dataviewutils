@@ -44,15 +44,6 @@ module powerbi.extensibility.utils.dataview {
     export class DataViewObjectsParser {
         private static InnumerablePropertyPrefix: RegExp = /^_/;
 
-        private static createFillColorRegExp(fillColorNames: string[]): RegExp {
-            let formattedFillColorNames: string = fillColorNames
-                .reduce((previousValue: string, currentValue: string, index: number) => {
-                    return previousValue.concat(`${index ? "|" : ""}(${currentValue})`);
-                }, "");
-
-            return new RegExp(`^${formattedFillColorNames}$`);
-        }
-
         public static getDefault() {
             return new this();
         }

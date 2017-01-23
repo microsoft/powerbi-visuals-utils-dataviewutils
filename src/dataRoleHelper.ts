@@ -78,7 +78,10 @@ module powerbi.extensibility.utils.dataview {
         }
 
         export function hasRoleInValueColumn(valueColumn: DataViewValueColumn, name: string): boolean {
-            return valueColumn && valueColumn.source && valueColumn.source.roles && (valueColumn.source.roles[name] === true);
+            return valueColumn
+                && valueColumn.source
+                && valueColumn.source.roles
+                && (valueColumn.source.roles[name] === true);
         }
     }
 }
