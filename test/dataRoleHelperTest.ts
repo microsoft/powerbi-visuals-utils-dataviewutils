@@ -58,11 +58,11 @@ module powerbi.extensibility.utils.dataview.test {
                     { displayName: "col4", isMeasure: true, roles: { "Y": true } }
                 ];
 
-                let dataView: DataView = dataViewBuilder.build();
+                const dataView: DataView = dataViewBuilder.build();
 
-                let grouped = dataView.categorical.values.grouped();
+                const grouped: DataViewValueColumnGroup[] = dataView.categorical.values.grouped();
 
-                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "InvalidRoleName");
+                let result: number = DataRoleHelper.getMeasureIndexOfRole(grouped, "InvalidRoleName");
                 expect(result).toBe(-1);
 
                 result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
@@ -83,9 +83,9 @@ module powerbi.extensibility.utils.dataview.test {
                     { displayName: "col4", isMeasure: true }
                 ];
 
-                let dataView: DataView = dataViewBuilder.build();
+                const dataView: DataView = dataViewBuilder.build();
 
-                let grouped = dataView.categorical.values.grouped();
+                const grouped = dataView.categorical.values.grouped();
 
                 let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "InvalidRoleName");
                 expect(result).toBe(-1);
@@ -108,11 +108,11 @@ module powerbi.extensibility.utils.dataview.test {
                     { displayName: "col4", isMeasure: true }
                 ];
 
-                let dataView: DataView = dataViewBuilder.build();
+                const dataView: DataView = dataViewBuilder.build();
 
-                let grouped = dataView.categorical.values.grouped();
+                const grouped: DataViewValueColumnGroup[] = dataView.categorical.values.grouped();
 
-                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
+                let result: number = DataRoleHelper.getMeasureIndexOfRole(grouped, "Size");
                 expect(result).toBe(-1);
             });
 
@@ -124,11 +124,11 @@ module powerbi.extensibility.utils.dataview.test {
                     { displayName: "col2", isMeasure: true }
                 ];
 
-                let dataView: DataView = dataViewBuilder.build();
+                const dataView: DataView = dataViewBuilder.build();
 
-                let grouped = dataView.categorical.values.grouped();
+                const grouped: DataViewValueColumnGroup[] = dataView.categorical.values.grouped();
 
-                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "2nd measure");
+                let result: number = DataRoleHelper.getMeasureIndexOfRole(grouped, "2nd measure");
                 expect(result).toBe(-1);
             });
 
@@ -137,11 +137,11 @@ module powerbi.extensibility.utils.dataview.test {
 
                 dataViewBuilder.columns = [];
 
-                let dataView: DataView = dataViewBuilder.build();
+                const dataView: DataView = dataViewBuilder.build();
 
-                let grouped = dataView.categorical.values.grouped();
+                const grouped: DataViewValueColumnGroup[] = dataView.categorical.values.grouped();
 
-                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "");
+                let result: number = DataRoleHelper.getMeasureIndexOfRole(grouped, "");
                 expect(result).toBe(-1);
             });
         });
@@ -149,13 +149,11 @@ module powerbi.extensibility.utils.dataview.test {
         describe("hasRoleInDataView", () => {
             it("should return true is the role is available", () => {
                 const dataView: DataView = getDataView();
-
                 expect(DataRoleHelper.hasRoleInDataView(dataView, "Series")).toBe(true);
             });
 
             it("should return false is the role isn't available", () => {
                 const dataView: DataView = getDataView();
-
                 expect(DataRoleHelper.hasRoleInDataView(dataView, "Category")).toBe(false);
             });
 
