@@ -1,6 +1,6 @@
 {
   "name": "powerbi-visuals-utils-dataviewutils",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "dataviewutils",
   "main": "lib/index.js",
   "repository": {
@@ -41,7 +41,5 @@
     "tslint": "5.4.3",
     "tslint-microsoft-contrib": "^5.0.0",
     "typescript": "2.1.4"
-  },
-  "dependencies": {
   }
 }

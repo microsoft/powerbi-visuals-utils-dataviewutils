@@ -57,7 +57,6 @@ module.exports = (config) => {
         ],
         singleRun: true,
         files: [
-            'node_modules/lodash/lodash.min.js',
             srcRecursivePath,
             testRecursivePath,
             {

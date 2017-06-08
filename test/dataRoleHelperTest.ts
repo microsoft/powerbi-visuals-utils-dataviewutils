@@ -131,6 +131,19 @@ module powerbi.extensibility.utils.dataview.test {
                 let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "2nd measure");
                 expect(result).toBe(-1);
             });
+
+            it("getMeasureIndexOfRole without any groups", () => {
+                dataViewBuilder.values = [];
+
+                dataViewBuilder.columns = [];
+
+                let dataView: DataView = dataViewBuilder.build();
+
+                let grouped = dataView.categorical.values.grouped();
+
+                let result = DataRoleHelper.getMeasureIndexOfRole(grouped, "");
+                expect(result).toBe(-1);
+            });
         });
 
         describe("hasRoleInDataView", () => {
