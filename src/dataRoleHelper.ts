@@ -34,17 +34,17 @@ module powerbi.extensibility.utils.dataview {
 
     export module DataRoleHelper {
         export function getMeasureIndexOfRole(grouped: DataViewValueColumnGroup[], roleName: string): number {
-            if (!_.isEmpty(grouped)) {
-                let firstGroup = grouped[0];
+            if (!grouped || !grouped.length) {
+                return -1;
+            }
+            let firstGroup = grouped[0];
+            if (firstGroup.values && firstGroup.values.length > 0) {
+                for (let i = 0, len = firstGroup.values.length; i < len; ++i) {
+                    let value = firstGroup.values[i];
 
-                if (firstGroup.values && firstGroup.values.length > 0) {
-                    for (let i = 0, len = firstGroup.values.length; i < len; ++i) {
-                        let value = firstGroup.values[i];
-
-                        if (value && value.source) {
-                            if (hasRole(value.source, roleName)) {
-                                return i;
-                            }
+                    if (value && value.source) {
+                        if (hasRole(value.source, roleName)) {
+                            return i;
                         }
                     }
                 }
@@ -54,7 +54,7 @@ module powerbi.extensibility.utils.dataview {
         }
 
         export function getCategoryIndexOfRole(categories: DataViewCategoryColumn[], roleName: string): number {
-            if (!_.isEmpty(categories)) {
+            if (categories && categories.length) {
                 for (let i = 0, ilen = categories.length; i < ilen; i++) {
                     if (hasRole(categories[i].source, roleName)) {
                         return i;
@@ -74,7 +74,7 @@ module powerbi.extensibility.utils.dataview {
             return dataView != null
                 && dataView.metadata != null
                 && dataView.metadata.columns
-                && _.some(dataView.metadata.columns, c => c.roles && c.roles[name] !== undefined); // any is an alias of some
+                && dataView.metadata.columns.some((c: DataViewMetadataColumn) => c.roles && c.roles[name] !== undefined); // any is an alias of some
         }
 
         export function hasRoleInValueColumn(valueColumn: DataViewValueColumn, name: string): boolean {

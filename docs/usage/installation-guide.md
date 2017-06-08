@@ -36,7 +36,6 @@ As a result you will have the following file structure:
 
 ## Including artifacts to the custom visual
 To use the package with your custom visuals your should add the following files to the ```externalJS``` property of ```pbiviz.json``` :
-* ```node_modules/lodash/lodash.min.js```
 * ```node_modules/powerbi-visuals-utils-dataviewutils/lib/index.js```
 
 As a result you will have the following file structure:
@@ -47,7 +46,6 @@ As a result you will have the following file structure:
   "author": {...},
   "assets": {...},
   "externalJS": [
-    "node_modules/lodash/lodash.min.js",
     "node_modules/powerbi-visuals-utils-dataviewutils/lib/index.js"
   ],
   "style": ...,
