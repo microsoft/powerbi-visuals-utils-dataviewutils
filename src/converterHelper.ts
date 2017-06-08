@@ -71,10 +71,10 @@ module powerbi.extensibility.utils.dataview {
         }
 
         export function hasImageUrlColumn(dataView: DataView): boolean {
-            if (!dataView || !dataView.metadata || _.isEmpty(dataView.metadata.columns))
+            if (!dataView || !dataView.metadata || !dataView.metadata.columns || !dataView.metadata.columns.length) {
                 return false;
-
-            return _.some(dataView.metadata.columns, column => isImageUrlColumn(column) === true);
+            }
+            return dataView.metadata.columns.some((column: DataViewMetadataColumn) => isImageUrlColumn(column) === true);
         }
     }
 }

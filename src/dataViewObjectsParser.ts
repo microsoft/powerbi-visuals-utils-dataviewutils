@@ -103,7 +103,7 @@ module powerbi.extensibility.utils.dataview {
             };
 
             for (let key in dataViewProperties) {
-                if (_.has(dataViewProperties, key)) {
+                if (dataViewProperties.hasOwnProperty(key)) {
                     instance.properties[key] = dataViewProperties[key];
                 }
             }
