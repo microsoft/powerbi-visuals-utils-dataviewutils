@@ -61,6 +61,11 @@ declare module powerbi.extensibility.utils.dataview {
     }
 }
 declare module powerbi.extensibility.utils.dataview {
+    module validationHelper {
+        function checkIsImageUrlAllowable(url: string): boolean;
+    }
+}
+declare module powerbi.extensibility.utils.dataview {
     import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifier;
     import DataView = powerbi.DataView;
     import EnumerateVisualObjectInstancesOptions = powerbi.EnumerateVisualObjectInstancesOptions;
