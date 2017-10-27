@@ -29,18 +29,18 @@ module powerbi.extensibility.utils.dataview.test {
 
     describe("validationHelper", () => {
         it("valid URLs supported extensions", () => {
-            expect(validationHelper.checkIsImageUrlAllowable("http://someTestImage.PnG")).toBe(true);
-            expect(validationHelper.checkIsImageUrlAllowable("http://someTestImage.jPG")).toBe(true);
-            expect(validationHelper.checkIsImageUrlAllowable("http://someTestImage.GIf")).toBe(true);
-            expect(validationHelper.checkIsImageUrlAllowable("http://someTestImage.SVG")).toBe(true);
+            expect(validationHelper.checkIsImageUrlAllowable("https://someHost/someTestImage.PnG")).toBe(true);
+            expect(validationHelper.checkIsImageUrlAllowable("https://someHost/someTestImage.jPG")).toBe(true);
+            expect(validationHelper.checkIsImageUrlAllowable("https://someHost/someTestImage.GIf")).toBe(true);
+            expect(validationHelper.checkIsImageUrlAllowable("https://someHost/someTestImage.SVG")).toBe(true);
         });
 
         it("invalid URL wrong extension", () => {
-            expect(validationHelper.checkIsImageUrlAllowable("http://someTestImage.exe")).toBe(false);
+            expect(validationHelper.checkIsImageUrlAllowable("https://someHostsomeTestImage.exe")).toBe(false);
         });
 
         it("invalid URL no extension", () => {
-            expect(validationHelper.checkIsImageUrlAllowable("http://someGeneratedImage")).toBe(false);
+            expect(validationHelper.checkIsImageUrlAllowable("https://someHostsomeGeneratedImage")).toBe(false);
         });
 
         it("URL javascript: directive checking", () => {
