@@ -13,6 +13,7 @@
         "src/dataViewObject.ts",
         "src/dataViewObjects.ts",
         "src/converterHelper.ts",
+        "src/validationHelper.ts",
         "src/dataViewObjectsParser.ts"
     ]
 }
