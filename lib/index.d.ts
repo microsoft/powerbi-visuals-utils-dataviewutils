@@ -62,7 +62,8 @@ declare module powerbi.extensibility.utils.dataview {
 }
 declare module powerbi.extensibility.utils.dataview {
     module validationHelper {
-        function checkIsImageUrlAllowable(url: string): boolean;
+        function isImageUrlAllowed(url: string): boolean;
+        function isFileImage(url: string, imageCheckResultCallBack: (isImage: boolean, contentType: string) => void): void;
     }
 }
 declare module powerbi.extensibility.utils.dataview {

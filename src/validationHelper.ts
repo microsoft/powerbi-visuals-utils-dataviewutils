@@ -26,10 +26,30 @@
 
 module powerbi.extensibility.utils.dataview {
     export module validationHelper {
-        export function checkIsImageUrlAllowable(url: string): boolean {
-            // Excludes all URLs that don't contain .gif .jpg .png or .svg extensions.
-            // Also excludes directives "javascript:" and "data:".
-            return (/\.(gif|jpg|png|svg)$/i).test(url) && !(/(javascript:|data:)/i).test(url);
+        export function isImageUrlAllowed(url: string): boolean {
+            // Excludes all URLs that don't contain .gif .jpg .png or .svg extensions and don't start from "http(s)://".
+            // As a result -- also excludes all directives such as "javascript:", "data:" and "blob:".
+            return (/^https?:\/\/.+\.(gif|jpg|png|svg)$/i).test(url);
+        }
+
+        export function isFileImage(url: string, imageCheckResultCallBack: (isImage: boolean, contentType: string) => void) {
+            let request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState != this.HEADERS_RECEIVED) { 
+                    return; 
+                }
+                
+                let contentType = request.getResponseHeader("Content-Type"),
+                supportedTypes = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
+
+                if (supportedTypes.indexOf(contentType) > -1) {
+                    return imageCheckResultCallBack(true, contentType);
+                }
+
+                return imageCheckResultCallBack(false, contentType);
+            };
+            request.open("GET", url, true);
+            request.send();
         }
     }
 }

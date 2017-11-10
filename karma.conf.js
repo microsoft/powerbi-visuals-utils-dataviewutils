@@ -63,6 +63,42 @@ module.exports = (config) => {
                 pattern: srcOriginalRecursivePath,
                 included: false,
                 served: true
+            },
+            {
+                pattern: 'test/images/*.png',
+                watched: false,
+                included: false,
+                served: true
+            },
+            {
+                pattern: 'test/images/*.jpg',
+                watched: false,
+                included: false,
+                served: true
+            },
+            {
+                pattern: 'test/images/*.gif',
+                watched: false,
+                included: false,
+                served: true
+            },
+            {
+                pattern: 'test/images/*.svg',
+                watched: false,
+                included: false,
+                served: true
+            },
+            {
+                pattern: 'test/images/*.bmp',
+                watched: false,
+                included: false,
+                served: true
+            },
+            {
+                pattern: 'test/data/*.txt',
+                watched: false,
+                included: false,
+                served: true
             }
         ],
         preprocessors: {
