@@ -35,10 +35,10 @@ module powerbi.extensibility.utils.dataview {
         export function isFileImage(url: string, imageCheckResultCallBack: (isImage: boolean, contentType: string) => void) {
             let request = new XMLHttpRequest();
             request.onreadystatechange = function () {
-                if (request.readyState != this.HEADERS_RECEIVED) { 
-                    return; 
+                if (request.readyState !== this.HEADERS_RECEIVED) {
+                    return;
                 }
-                
+
                 let contentType = request.getResponseHeader("Content-Type"),
                 supportedTypes = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
 
