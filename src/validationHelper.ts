@@ -48,7 +48,7 @@ module powerbi.extensibility.utils.dataview {
 
                 return imageCheckResultCallBack(false, contentType);
             };
-            request.open("GET", url, true);
+            request.open("HEAD", url, true);
             request.send();
         }
     }
