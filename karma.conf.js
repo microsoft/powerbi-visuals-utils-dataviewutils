@@ -65,31 +65,7 @@ module.exports = (config) => {
                 served: true
             },
             {
-                pattern: 'test/images/*.png',
-                watched: false,
-                included: false,
-                served: true
-            },
-            {
-                pattern: 'test/images/*.jpg',
-                watched: false,
-                included: false,
-                served: true
-            },
-            {
-                pattern: 'test/images/*.gif',
-                watched: false,
-                included: false,
-                served: true
-            },
-            {
-                pattern: 'test/images/*.svg',
-                watched: false,
-                included: false,
-                served: true
-            },
-            {
-                pattern: 'test/images/*.bmp',
+                pattern: 'test/images/*.+(png|jpg|gif|svg|bmp)',
                 watched: false,
                 included: false,
                 served: true

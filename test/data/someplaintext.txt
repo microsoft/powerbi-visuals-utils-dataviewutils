@@ -1,1 +1,1 @@
-Plain text with some data taht is used in unit tests
+Plain text with some data that is used in unit tests

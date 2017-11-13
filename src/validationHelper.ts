@@ -28,8 +28,8 @@ module powerbi.extensibility.utils.dataview {
     export module validationHelper {
         export function isImageUrlAllowed(url: string): boolean {
             // Excludes all URLs that don't contain .gif .jpg .png or .svg extensions and don't start from "http(s)://".
-            // As a result -- also excludes all directives such as "javascript:", "data:" and "blob:".
-            return (/^https?:\/\/.+\.(gif|jpg|png|svg)$/i).test(url);
+            // Base64 incoded images are allowable too.
+            return (/^https?:\/\/.+\.(gif|jpg|png|svg)$/i).test(url) || (/^data:image\/(gif|jpeg|png|svg\+xml);base64,/i).test(url);
         }
 
         export function isFileImage(url: string, imageCheckResultCallBack: (isImage: boolean, contentType: string) => void) {
