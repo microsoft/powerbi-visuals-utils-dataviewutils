@@ -109,7 +109,7 @@ module powerbi.extensibility.utils.dataview.test {
         it("check file is unsupported BMP image", (done) => {
             validationHelper.isFileImage("/base/test/images/access.bmp", (isImage, contentType) => {
                 expect(isImage).toBe(false);
-                expect(contentType).toBe("image/x-ms-bmp");
+                expect(contentType).toMatch(/^image\/(x-ms-)?bmp$/i);
                 done();
             });
         });

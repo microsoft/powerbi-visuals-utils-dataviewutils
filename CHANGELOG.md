@@ -1,3 +1,6 @@
+## 1.4.1
+* FIX: Was removed auto-generated element that negatively impacts on a visual test infrastructure
+
 ## 1.4.0
 * ADD: isFileImage function was added for checking of files content-type
 * UPD: checkIsImageUrlAllowable function was renamed to isImageUrlAllowed and checks was extended
