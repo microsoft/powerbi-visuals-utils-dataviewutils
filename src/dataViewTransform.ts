@@ -23,77 +23,74 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+// powerbi
+import DataViewValueColumn = powerbi.DataViewValueColumn;
+import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
+import DataViewValueColumns = powerbi.DataViewValueColumns;
+import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
 
-module powerbi.extensibility.utils.dataview {
-    // powerbi
-    import DataViewValueColumn = powerbi.DataViewValueColumn;
-    import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
-    import DataViewValueColumns = powerbi.DataViewValueColumns;
-    import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
+// powerbi.data
+import ISQExpr = powerbi.data.ISQExpr;
 
-    // powerbi.data
-    import ISQExpr = powerbi.data.ISQExpr;
+// TODO: refactor & focus DataViewTransform into a service with well-defined dependencies.
+export module DataViewTransform {
+    // TODO: refactor this, setGrouped, and groupValues to a test helper to stop using it in the product
+    export function createValueColumns(
+        values: DataViewValueColumn[] = [],
+        valueIdentityFields?: ISQExpr[],
+        source?: DataViewMetadataColumn): DataViewValueColumns {
+        let result = <DataViewValueColumns>values;
+        setGrouped(result);
 
-    // TODO: refactor & focus DataViewTransform into a service with well-defined dependencies.
-    export module DataViewTransform {
-        // TODO: refactor this, setGrouped, and groupValues to a test helper to stop using it in the product
-        export function createValueColumns(
-            values: DataViewValueColumn[] = [],
-            valueIdentityFields?: ISQExpr[],
-            source?: DataViewMetadataColumn): DataViewValueColumns {
-            let result = <DataViewValueColumns>values;
-            setGrouped(result);
-
-            if (valueIdentityFields) {
-                result.identityFields = valueIdentityFields;
-            }
-
-            if (source) {
-                result.source = source;
-            }
-
-            return result;
+        if (valueIdentityFields) {
+            result.identityFields = valueIdentityFields;
         }
 
-        export function setGrouped(values: DataViewValueColumns, groupedResult?: DataViewValueColumnGroup[]): void {
-            values.grouped = groupedResult
-                ? () => groupedResult
-                : () => groupValues(values);
+        if (source) {
+            result.source = source;
         }
 
-        /** Group together the values with a common identity. */
-        export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnGroup[] {
-            let groups: DataViewValueColumnGroup[] = [],
-                currentGroup: DataViewValueColumnGroup;
+        return result;
+    }
 
-            for (let i = 0, len = values.length; i < len; i++) {
-                let value: DataViewValueColumn = values[i];
+    export function setGrouped(values: DataViewValueColumns, groupedResult?: DataViewValueColumnGroup[]): void {
+        values.grouped = groupedResult
+            ? () => groupedResult
+            : () => groupValues(values);
+    }
 
-                if (!currentGroup || currentGroup.identity !== value.identity) {
-                    currentGroup = {
-                        values: []
-                    };
+    /** Group together the values with a common identity. */
+    export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnGroup[] {
+        let groups: DataViewValueColumnGroup[] = [],
+            currentGroup: DataViewValueColumnGroup;
 
-                    if (value.identity) {
-                        currentGroup.identity = value.identity;
+        for (let i = 0, len = values.length; i < len; i++) {
+            let value: DataViewValueColumn = values[i];
 
-                        let source: DataViewMetadataColumn = value.source;
+            if (!currentGroup || currentGroup.identity !== value.identity) {
+                currentGroup = {
+                    values: []
+                };
 
-                        // allow null, which will be formatted as (Blank).
-                        if (source.groupName !== undefined) {
-                            currentGroup.name = source.groupName;
-                        } else if (source.displayName) {
-                            currentGroup.name = source.displayName;
-                        }
+                if (value.identity) {
+                    currentGroup.identity = value.identity;
+
+                    let source: DataViewMetadataColumn = value.source;
+
+                    // allow null, which will be formatted as (Blank).
+                    if (source.groupName !== undefined) {
+                        currentGroup.name = source.groupName;
+                    } else if (source.displayName) {
+                        currentGroup.name = source.displayName;
                     }
-
-                    groups.push(currentGroup);
                 }
 
-                currentGroup.values.push(value);
+                groups.push(currentGroup);
             }
 
-            return groups;
+            currentGroup.values.push(value);
         }
+
+        return groups;
     }
 }

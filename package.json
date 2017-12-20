@@ -1,6 +1,6 @@
 {
   "name": "powerbi-visuals-utils-dataviewutils",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "dataviewutils",
   "main": "lib/index.js",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "git+https://github.com/Microsoft/powerbi-visuals-utils-dataviewutils.git"
   },
   "keywords": [
-    "powerbi-visuals-utils"
+    "powerbi-visuals-utils-dataviewutils"
   ],
   "author": "Microsoft",
   "license": "MIT",
@@ -23,11 +23,15 @@
     "build:map": "tsc --sourceMap",
     "build": "tsc",
     "test": "karma start",
-    "pretest": "npm run build:map",
+    "pretest": "npm run lint",
     "lint": "tslint -r \"node_modules/tslint-microsoft-contrib\"  \"+(src|test)/**/*.ts\""
   },
   "devDependencies": {
-    "@types/jasmine": "2.5.51",
+    "@types/jasmine": "2.8.2",
+    "@types/karma": "^1.7.2",
+    "@types/node": "^8.0.56",
+    "@types/webpack": "^3.8.1",
+    "chalk": "^2.1.0",
     "coveralls": "2.13.1",
     "jasmine": "2.6.0",
     "karma": "1.7.0",
@@ -37,9 +41,14 @@
     "karma-remap-istanbul": "0.6.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-typescript-preprocessor": "0.3.0",
-    "powerbi-visuals-tools": "1.2.0",
+    "karma-webpack": "^2.0.6",
+    "powerbi-visuals-tools": "1.9.0",
     "tslint": "5.4.3",
+    "ts-loader": "^3.1.1",
+    "ts-node": "^3.3.0",
     "tslint-microsoft-contrib": "^5.0.0",
-    "typescript": "2.1.4"
+    "typescript": "2.5.3",
+    "webpack": "^3.8.1",
+    "webpack-node-externals": "^1.6.0"
   }
 }

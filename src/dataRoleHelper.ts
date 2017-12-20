@@ -23,65 +23,62 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+// powerbi
+import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
+import DataViewCategoryColumn = powerbi.DataViewCategoryColumn;
+import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
+import DataView = powerbi.DataView;
+import DataViewValueColumn = powerbi.DataViewValueColumn;
 
-module powerbi.extensibility.utils.dataview {
-    // powerbi
-    import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
-    import DataViewCategoryColumn = powerbi.DataViewCategoryColumn;
-    import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
-    import DataView = powerbi.DataView;
-    import DataViewValueColumn = powerbi.DataViewValueColumn;
-
-    export module DataRoleHelper {
-        export function getMeasureIndexOfRole(grouped: DataViewValueColumnGroup[], roleName: string): number {
-            if (!grouped || !grouped.length) {
-                return -1;
-            }
-            let firstGroup = grouped[0];
-            if (firstGroup.values && firstGroup.values.length > 0) {
-                for (let i = 0, len = firstGroup.values.length; i < len; ++i) {
-                    let value = firstGroup.values[i];
-
-                    if (value && value.source) {
-                        if (hasRole(value.source, roleName)) {
-                            return i;
-                        }
-                    }
-                }
-            }
-
+export module DataRoleHelper {
+    export function getMeasureIndexOfRole(grouped: DataViewValueColumnGroup[], roleName: string): number {
+        if (!grouped || !grouped.length) {
             return -1;
         }
+        let firstGroup = grouped[0];
+        if (firstGroup.values && firstGroup.values.length > 0) {
+            for (let i = 0, len = firstGroup.values.length; i < len; ++i) {
+                let value = firstGroup.values[i];
 
-        export function getCategoryIndexOfRole(categories: DataViewCategoryColumn[], roleName: string): number {
-            if (categories && categories.length) {
-                for (let i = 0, ilen = categories.length; i < ilen; i++) {
-                    if (hasRole(categories[i].source, roleName)) {
+                if (value && value.source) {
+                    if (hasRole(value.source, roleName)) {
                         return i;
                     }
                 }
             }
-
-            return -1;
         }
 
-        export function hasRole(column: DataViewMetadataColumn, name: string): boolean {
-            let roles = column.roles;
-            return roles && roles[name];
+        return -1;
+    }
+
+    export function getCategoryIndexOfRole(categories: DataViewCategoryColumn[], roleName: string): number {
+        if (categories && categories.length) {
+            for (let i = 0, ilen = categories.length; i < ilen; i++) {
+                if (hasRole(categories[i].source, roleName)) {
+                    return i;
+                }
+            }
         }
 
-        export function hasRoleInDataView(dataView: DataView, name: string): boolean {
-            return dataView != null
-                && dataView.metadata != null
-                && dataView.metadata.columns
-                && dataView.metadata.columns.some((c: DataViewMetadataColumn) => c.roles && c.roles[name] !== undefined); // any is an alias of some
-        }
+        return -1;
+    }
 
-        export function hasRoleInValueColumn(valueColumn: DataViewValueColumn, name: string): boolean {
-            return valueColumn
-                && valueColumn.source
-                && valueColumn.source.roles
-                && (valueColumn.source.roles[name] === true);
-        }
+    export function hasRole(column: DataViewMetadataColumn, name: string): boolean {
+        let roles = column.roles;
+        return roles && roles[name];
+    }
+
+    export function hasRoleInDataView(dataView: DataView, name: string): boolean {
+        return dataView != null
+            && dataView.metadata != null
+            && dataView.metadata.columns
+            && dataView.metadata.columns.some((c: DataViewMetadataColumn) => c.roles && c.roles[name] !== undefined); // any is an alias of some
+    }
+
+    export function hasRoleInValueColumn(valueColumn: DataViewValueColumn, name: string): boolean {
+        return valueColumn
+            && valueColumn.source
+            && valueColumn.source.roles
+            && (valueColumn.source.roles[name] === true);
     }
 }
