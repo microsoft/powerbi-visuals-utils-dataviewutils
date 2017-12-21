@@ -108,8 +108,7 @@ module.exports = (config: Config) => {
                 ]
             },
             output: {
-                filename: "index.build.js",
-                // path: path.resolve(__dirname, "lib")
+                filename: "index.build.js"
             },
             plugins: [
             ]

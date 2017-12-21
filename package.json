@@ -29,7 +29,6 @@
   "devDependencies": {
     "@types/jasmine": "2.8.2",
     "@types/karma": "^1.7.2",
-    "@types/node": "^8.0.56",
     "@types/webpack": "^3.8.1",
     "chalk": "^2.1.0",
     "coveralls": "2.13.1",
@@ -48,7 +47,6 @@
     "ts-node": "^3.3.0",
     "tslint-microsoft-contrib": "^5.0.0",
     "typescript": "2.5.3",
-    "webpack": "^3.8.1",
-    "webpack-node-externals": "^1.6.0"
+    "webpack": "^3.8.1"
   }
 }
