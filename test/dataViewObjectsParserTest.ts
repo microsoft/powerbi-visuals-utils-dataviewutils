@@ -23,135 +23,135 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+import EnumerateVisualObjectInstancesOptions = powerbi.EnumerateVisualObjectInstancesOptions;
+import VisualObjectInstanceEnumerationObject = powerbi.VisualObjectInstanceEnumerationObject;
+import VisualObjectInstance = powerbi.VisualObjectInstance;
+import DataView = powerbi.DataView;
 
-/// <reference path="_references.ts"/>
+import {DataViewObjectsParser, DataViewProperties}  from "../src/dataViewObjectsParser";
 
-module powerbi.extensibility.utils.dataview.test {
-    import DataViewObjectsParser = powerbi.extensibility.utils.dataview.DataViewObjectsParser;
+const fillColor: string = "red",
+    precision: number = 3.14;
 
-    const fillColor: string = "red",
-        precision: number = 3.14;
-
-    function createDataView(
-        generalFillColor: string = fillColor,
-        generalPrecision: number = precision): DataView {
-        return {
-            metadata: {
-                columns: [],
-                objects: {
-                    general: {
-                        fillColor: { solid: { color: generalFillColor } },
-                        precision: generalPrecision
-                    }
+function createDataView(
+    generalFillColor: string = fillColor,
+    generalPrecision: number = precision): DataView {
+    return {
+        metadata: {
+            columns: [],
+            objects: {
+                general: {
+                    fillColor: { solid: { color: generalFillColor } },
+                    precision: generalPrecision
                 }
             }
-        };
-    }
+        }
+    };
+}
 
-    describe("DataViewObjectsParser", () => {
-        describe("getDefault", () => {
-            it("should return an instance of DataViewObjectsParser", () => {
-                let instance: DataViewObjectsParser = DataViewObjectsParser.getDefault();
+describe("DataViewObjectsParser", () => {
+    describe("getDefault", () => {
+        it("should return an instance of DataViewObjectsParser", () => {
+            let instance: DataViewObjectsParser = DataViewObjectsParser.getDefault();
 
-                expect(instance instanceof DataViewObjectsParser).toBeTruthy();
-            });
-        });
-
-        describe("getProperties", () => {
-            it("should return an object w/o any properties", () => {
-                let properties: DataViewProperties = DataViewObjectsParserWithHiddenProperty
-                    .getDefault()
-                    .getProperties();
-
-                expect(Object.keys(properties).length).toBe(0);
-            });
-
-            it("should return an object with a property", () => {
-                let properties: DataViewProperties = DataViewObjectsParserWithAProperty
-                    .getDefault()
-                    .getProperties();
-
-                expect(Object.keys(properties).length).toBe(1);
-            });
-        });
-
-        describe("parse", () => {
-            it("should return the correct color value", () => {
-                const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
-                    .parse<DataViewObjectsParserWithProperties>(createDataView());
-
-                expect(properties.general.fillColor).toBe(fillColor);
-            });
-
-            it("should return the correct value", () => {
-                const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
-                    .parse<DataViewObjectsParserWithProperties>(createDataView());
-
-                expect(properties.general.precision).toBe(precision);
-            });
-
-            it("should return default settings if the dataView is undefined", () => {
-                const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
-                    .parse<DataViewObjectsParserWithProperties>(null);
-
-                expect(properties).toBeDefined();
-            });
-        });
-
-        describe("enumerateObjectInstances", () => {
-            let instancesOptions: EnumerateVisualObjectInstancesOptions,
-                dataViewObjectParser: DataViewObjectsParserWithProperties;
-
-            beforeEach(() => {
-                instancesOptions = { objectName: "general" };
-
-                dataViewObjectParser = DataViewObjectsParserWithProperties
-                    .parse<DataViewObjectsParserWithProperties>(createDataView());
-            });
-
-            it("shoud return an empty array if DataViewObjectParser is undefined", () => {
-                let enumeration: VisualObjectInstance[] =
-                    DataViewObjectsParserWithProperties.enumerateObjectInstances(
-                        undefined,
-                        instancesOptions) as VisualObjectInstance[];
-
-                expect(enumeration.length).toBe(0);
-            });
-
-            it("the objectName should be correct", () => {
-                let enumeration: VisualObjectInstanceEnumerationObject =
-                    DataViewObjectsParserWithProperties.enumerateObjectInstances(
-                        dataViewObjectParser,
-                        instancesOptions) as VisualObjectInstanceEnumerationObject;
-
-                expect(enumeration.instances[0].objectName).toBe("general");
-            });
-
-            it("the fillColor should be correct", () => {
-                let enumeration: VisualObjectInstanceEnumerationObject =
-                    DataViewObjectsParserWithProperties.enumerateObjectInstances(
-                        dataViewObjectParser,
-                        instancesOptions) as VisualObjectInstanceEnumerationObject;
-
-                expect(enumeration.instances[0].properties["fillColor"]).toBe(fillColor);
-            });
+            expect(instance instanceof DataViewObjectsParser).toBeTruthy();
         });
     });
 
-    class DataViewObjectsParserWithHiddenProperty extends DataViewObjectsParser {
-        public _hiddenProperty: string = "Power BI";
-    }
+    describe("getProperties", () => {
+        it("should return an object w/o any properties", () => {
+            let properties: DataViewProperties = DataViewObjectsParserWithHiddenProperty
+                .getDefault()
+                .getProperties();
 
-    class DataViewObjectsParserWithAProperty extends DataViewObjectsParser {
-        public testProperty: string = "Power BI";
-    }
+            expect(Object.keys(properties).length).toBe(0);
+        });
 
-    class GeneralProperties {
-        public fillColor: string = "blue";
-        public precision: number = 5;
-    }
+        it("should return an object with a property", () => {
+            let properties: DataViewProperties = DataViewObjectsParserWithAProperty
+                .getDefault()
+                .getProperties();
 
-    class DataViewObjectsParserWithProperties extends DataViewObjectsParser {
-        public general: GeneralProperties = new GeneralProperties();
-    }
+            expect(Object.keys(properties).length).toBe(1);
+        });
+    });
+
+    describe("parse", () => {
+        it("should return the correct color value", () => {
+            const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
+                .parse<DataViewObjectsParserWithProperties>(createDataView());
+
+            expect(properties.general.fillColor).toBe(fillColor);
+        });
+
+        it("should return the correct value", () => {
+            const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
+                .parse<DataViewObjectsParserWithProperties>(createDataView());
+
+            expect(properties.general.precision).toBe(precision);
+        });
+
+        it("should return default settings if the dataView is undefined", () => {
+            const properties: DataViewObjectsParserWithProperties = DataViewObjectsParserWithProperties
+                .parse<DataViewObjectsParserWithProperties>(null);
+
+            expect(properties).toBeDefined();
+        });
+    });
+
+    describe("enumerateObjectInstances", () => {
+        let instancesOptions: EnumerateVisualObjectInstancesOptions,
+            dataViewObjectParser: DataViewObjectsParserWithProperties;
+
+        beforeEach(() => {
+            instancesOptions = { objectName: "general" };
+
+            dataViewObjectParser = DataViewObjectsParserWithProperties
+                .parse<DataViewObjectsParserWithProperties>(createDataView());
+        });
+
+        it("shoud return an empty array if DataViewObjectParser is undefined", () => {
+            let enumeration: VisualObjectInstance[] =
+                DataViewObjectsParserWithProperties.enumerateObjectInstances(
+                    undefined,
+                    instancesOptions) as VisualObjectInstance[];
+
+            expect(enumeration.length).toBe(0);
+        });
+
+        it("the objectName should be correct", () => {
+            let enumeration: VisualObjectInstanceEnumerationObject =
+                DataViewObjectsParserWithProperties.enumerateObjectInstances(
+                    dataViewObjectParser,
+                    instancesOptions) as VisualObjectInstanceEnumerationObject;
+
+            expect(enumeration.instances[0].objectName).toBe("general");
+        });
+
+        it("the fillColor should be correct", () => {
+            let enumeration: VisualObjectInstanceEnumerationObject =
+                DataViewObjectsParserWithProperties.enumerateObjectInstances(
+                    dataViewObjectParser,
+                    instancesOptions) as VisualObjectInstanceEnumerationObject;
+
+            expect(enumeration.instances[0].properties["fillColor"]).toBe(fillColor);
+        });
+    });
+});
+
+class DataViewObjectsParserWithHiddenProperty extends DataViewObjectsParser {
+    public _hiddenProperty: string = "Power BI";
+}
+
+class DataViewObjectsParserWithAProperty extends DataViewObjectsParser {
+    public testProperty: string = "Power BI";
+}
+
+class GeneralProperties {
+    public fillColor: string = "blue";
+    public precision: number = 5;
+}
+
+class DataViewObjectsParserWithProperties extends DataViewObjectsParser {
+    public general: GeneralProperties = new GeneralProperties();
 }

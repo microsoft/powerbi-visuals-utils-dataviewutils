@@ -23,33 +23,30 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-
-module powerbi.extensibility.utils.dataview {
-    // powerbi
-    import IDataViewObject = powerbi.DataViewObject;
-
-    export module DataViewObject {
-        export function getValue<T>(object: IDataViewObject, propertyName: string, defaultValue?: T): T {
-            if (!object) {
-                return defaultValue;
-            }
-
-            let propertyValue = <T>object[propertyName];
-            if (propertyValue === undefined) {
-                return defaultValue;
-            }
-
-            return propertyValue;
+// powerbi
+import IDataViewObject = powerbi.DataViewObject;
+import Fill = powerbi.Fill;
+export module DataViewObject {
+    export function getValue<T>(object: IDataViewObject, propertyName: string, defaultValue?: T): T {
+        if (!object) {
+            return defaultValue;
         }
 
-        /** Gets the solid color from a fill property using only a propertyName */
-        export function getFillColorByPropertyName(object: IDataViewObject, propertyName: string, defaultColor?: string): string {
-            let value: Fill = getValue(object, propertyName);
-            if (!value || !value.solid) {
-                return defaultColor;
-            }
-
-            return value.solid.color;
+        let propertyValue = <T>object[propertyName];
+        if (propertyValue === undefined) {
+            return defaultValue;
         }
+
+        return propertyValue;
+    }
+
+    /** Gets the solid color from a fill property using only a propertyName */
+    export function getFillColorByPropertyName(object: IDataViewObject, propertyName: string, defaultColor?: string): string {
+        let value: Fill = getValue(object, propertyName);
+        if (!value || !value.solid) {
+            return defaultColor;
+        }
+
+        return value.solid.color;
     }
 }

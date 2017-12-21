@@ -23,37 +23,40 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+"use strict";
 
-'use strict';
+import * as webpack from "webpack";
 
-const testRecursivePath = 'test/**/*.ts'
-    , srcOriginalRecursivePath = 'src/**/*.ts'
-    , srcRecursivePath = 'lib/**/*.js'
-    , coverageFolder = 'coverage';
+import { Config, ConfigOptions } from "karma";
 
-module.exports = (config) => {
+const testRecursivePath = "test/**/*.ts"
+    , srcOriginalRecursivePath = "src/**/*.ts"
+    , srcRecursivePath = "lib/**/*.js"
+    , coverageFolder = "coverage";
+
+module.exports = (config: Config) => {
     let browsers = [];
 
     if (process.env.TRAVIS) {
-        browsers.push('ChromeTravisCI');
+        browsers.push("ChromeTravisCI");
     } else {
-        browsers.push('Chrome');
+        browsers.push("Chrome");
     }
 
-    config.set({
+    config.set(<ConfigOptions>{
         customLaunchers: {
             ChromeTravisCI: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
+                base: "Chrome",
+                flags: ["--no-sandbox"]
             }
         },
         browsers: browsers,
         colors: true,
-        frameworks: ['jasmine'],
+        frameworks: ["jasmine"],
         reporters: [
-            'progress',
-            'coverage',
-            'karma-remap-istanbul'
+            "progress",
+            "coverage",
+            "karma-remap-istanbul"
         ],
         singleRun: true,
         files: [
@@ -65,40 +68,61 @@ module.exports = (config) => {
                 served: true
             },
             {
-                pattern: 'test/images/*.+(png|jpg|gif|svg|bmp)',
+                pattern: "test/images/*.+(png|jpg|gif|svg|bmp)",
                 watched: false,
                 included: false,
                 served: true
             },
             {
-                pattern: 'test/data/*.txt',
+                pattern: "test/data/*.txt",
                 watched: false,
                 included: false,
                 served: true
             }
         ],
         preprocessors: {
-            [testRecursivePath]: ['typescript'],
-            [srcRecursivePath]: ['sourcemap', 'coverage']
+            [testRecursivePath]: ["typescript", "webpack"],
+            [srcRecursivePath]: ["webpack", "sourcemap", "coverage"]
         },
-        typescriptPreprocessor: {
-            options: {
-                sourceMap: false,
-                target: 'ES5',
-                removeComments: false,
-                concatenateOutput: false
-            }
+        webpack: <webpack.Configuration>{
+            target: "web",
+            devtool: "inline-source-map",
+            resolve: {
+                extensions: [".webpack.js", ".web.js", ".js", ".ts", ".tsx"]
+            },
+            externals: [
+                {
+                    sinon: "sinon",
+                    chai: "chai"
+                },
+            ],
+            module: {
+                rules: [
+                    {
+                        test: /\.jsx?$/,
+                    },
+                    {
+                        test: /\.tsx?$/,
+                        loader: "ts-loader",
+                    }
+                ]
+            },
+            output: {
+                filename: "index.build.js"
+            },
+            plugins: [
+            ]
         },
         coverageReporter: {
             dir: coverageFolder,
             reporters: [
-                { type: 'html' },
-                { type: 'lcov' }
+                { type: "html" },
+                { type: "lcov" }
             ]
         },
         remapIstanbulReporter: {
             reports: {
-                lcovonly: coverageFolder + '/lcov.info',
+                lcovonly: coverageFolder + "/lcov.info",
                 html: coverageFolder
             }
         }
