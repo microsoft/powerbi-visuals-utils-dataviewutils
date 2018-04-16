@@ -2,7 +2,8 @@
   "name": "powerbi-visuals-utils-dataviewutils",
   "version": "2.0.0",
   "description": "dataviewutils",
-  "main": "lib/index.js",
+  "main": "lib/index",
+  "types": "lib/index",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Microsoft/powerbi-visuals-utils-dataviewutils.git"
@@ -27,6 +28,7 @@
     "lint": "tslint -r \"node_modules/tslint-microsoft-contrib\"  \"+(src|test)/**/*.ts\""
   },
   "devDependencies": {
+    "@types/powerbi-visuals-tools": "https://github.com/zBritva/-types-powerbi-visuals-tools",
     "@types/jasmine": "2.8.2",
     "@types/karma": "^1.7.2",
     "@types/webpack": "^3.8.1",

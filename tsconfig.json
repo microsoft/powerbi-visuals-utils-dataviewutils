@@ -15,7 +15,7 @@
         "outDir": "./lib"
     },
     "files": [
-        "node_modules/powerbi-visuals-tools/templates/visuals/.api/v1.9.0/PowerBI-visuals.d.ts"
+        "src/index.ts"
     ],
     "include": [
         "src/index.ts"

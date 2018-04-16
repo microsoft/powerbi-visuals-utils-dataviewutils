@@ -1,3 +1,4 @@
+/// <reference types="powerbi-visuals-tools" />
 import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifier;
 import DataView = powerbi.DataView;
 import EnumerateVisualObjectInstancesOptions = powerbi.EnumerateVisualObjectInstancesOptions;
