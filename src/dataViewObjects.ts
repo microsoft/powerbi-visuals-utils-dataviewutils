@@ -24,6 +24,7 @@
  *  THE SOFTWARE.
  */
 // powerbi
+import powerbi from "powerbi-visuals-tools";
 import IDataViewObject = powerbi.DataViewObject;
 import DataViewObjects = powerbi.DataViewObjects;
 import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifier;
