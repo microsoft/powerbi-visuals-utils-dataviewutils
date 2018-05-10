@@ -28,6 +28,7 @@
     "lint": "tslint -r \"node_modules/tslint-microsoft-contrib\"  \"+(src|test)/**/*.ts\""
   },
   "devDependencies": {
+    "@types/powerbi-visuals-tools": "1.11.0",
     "@types/jasmine": "2.8.2",
     "@types/karma": "^1.7.2",
     "@types/webpack": "^3.8.1",

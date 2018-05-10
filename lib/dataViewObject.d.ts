@@ -1,3 +1,4 @@
+/// <reference types="powerbi-visuals-tools" />
 import IDataViewObject = powerbi.DataViewObject;
 export declare module DataViewObject {
     function getValue<T>(object: IDataViewObject, propertyName: string, defaultValue?: T): T;
