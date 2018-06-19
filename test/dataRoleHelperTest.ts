@@ -24,6 +24,7 @@
  *  THE SOFTWARE.
  */
 // powerbi
+import powerbi from "powerbi-visuals-tools";
 import DataView = powerbi.DataView;
 import DataViewMetadata = powerbi.DataViewMetadata;
 import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;

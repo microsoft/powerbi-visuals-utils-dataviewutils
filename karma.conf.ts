@@ -23,15 +23,18 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+
 "use strict";
 
-import * as webpack from "webpack";
+const webpackConfig = require("./webpack.config.js");
+const tsconfig = require("./tsconfig.json");
 
 import { Config, ConfigOptions } from "karma";
 
 const testRecursivePath = "test/**/*.ts"
     , srcOriginalRecursivePath = "src/**/*.ts"
     , srcRecursivePath = "lib/**/*.js"
+    , srcCssRecursivePath = "lib/**/*.css"
     , coverageFolder = "coverage";
 
 module.exports = (config: Config) => {
@@ -59,7 +62,19 @@ module.exports = (config: Config) => {
             "karma-remap-istanbul"
         ],
         singleRun: true,
+        plugins: [
+            "karma-remap-istanbul",
+            "karma-coverage",
+            "karma-typescript",
+            "karma-webpack",
+            "karma-jasmine",
+            "karma-sourcemap-loader",
+            "karma-chrome-launcher"
+        ],
         files: [
+            "node_modules/jquery/dist/jquery.min.js",
+            "node_modules/jasmine-jquery/lib/jasmine-jquery.js",
+            srcCssRecursivePath,
             srcRecursivePath,
             testRecursivePath,
             {
@@ -81,37 +96,11 @@ module.exports = (config: Config) => {
             }
         ],
         preprocessors: {
-            [testRecursivePath]: ["typescript", "webpack"],
+            [testRecursivePath]: ["webpack"],
             [srcRecursivePath]: ["webpack", "sourcemap", "coverage"]
         },
-        webpack: <webpack.Configuration>{
-            target: "web",
-            devtool: "inline-source-map",
-            resolve: {
-                extensions: [".webpack.js", ".web.js", ".js", ".ts", ".tsx"]
-            },
-            externals: [
-                {
-                    sinon: "sinon",
-                    chai: "chai"
-                },
-            ],
-            module: {
-                rules: [
-                    {
-                        test: /\.jsx?$/,
-                    },
-                    {
-                        test: /\.tsx?$/,
-                        loader: "ts-loader",
-                    }
-                ]
-            },
-            output: {
-                filename: "index.build.js"
-            },
-            plugins: [
-            ]
+        typescriptPreprocessor: {
+            options: tsconfig.compilerOptions
         },
         coverageReporter: {
             dir: coverageFolder,
@@ -125,6 +114,13 @@ module.exports = (config: Config) => {
                 lcovonly: coverageFolder + "/lcov.info",
                 html: coverageFolder
             }
+        },
+        mime: {
+            "text/x-typescript": ["ts", "tsx"]
+        },
+        webpack: webpackConfig,
+        webpackMiddleware: {
+            stats: "errors-only"
         }
     });
 };

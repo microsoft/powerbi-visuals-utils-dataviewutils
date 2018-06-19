@@ -25,6 +25,7 @@
  */
 
 // powerbi
+import powerbi from "powerbi-visuals-tools";
 import IDataViewObject = powerbi.DataViewObject;
 
 // powerbi.extensibility.utils.dataview
