@@ -24,6 +24,7 @@
  *  THE SOFTWARE.
  */
 // data
+import powerbi from "powerbi-visuals-tools";
 import ISQExpr = powerbi.data.ISQExpr;
 import DataViewValueColumn = powerbi.DataViewValueColumn;
 import DataViewValueColumns = powerbi.DataViewValueColumns;
