@@ -24,7 +24,7 @@
  *  THE SOFTWARE.
  */
 // powerbi
-import powerbi from "powerbi-visuals-tools";
+import powerbi from "powerbi-visuals-api";
 import IDataViewObject = powerbi.DataViewObject;
 import Fill = powerbi.Fill;
 export module DataViewObject {
