@@ -24,7 +24,7 @@
  *  THE SOFTWARE.
  */
 // powerbi
-import powerbi from "powerbi-visuals-tools";
+import powerbi from "powerbi-visuals-api";
 import DataViewCategorical = powerbi.DataViewCategorical;
 import DataViewMetadata = powerbi.DataViewMetadata;
 import DataViewScopeIdentity = powerbi.DataViewScopeIdentity;
