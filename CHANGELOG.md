@@ -1,3 +1,6 @@
+## 1.5.0
+* Update packages to fix vulnerabilities
+
 ## 1.4.1
 * FIX: Was removed auto-generated element that negatively impacts on a visual test infrastructure
 
