@@ -30,7 +30,7 @@ import DataViewValueColumn = powerbi.DataViewValueColumn;
 import DataViewValueColumns = powerbi.DataViewValueColumns;
 import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
 import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
-import DataViewScopeIdentity = powerbi.DataViewScopeIdentity;
+import DataRepetitionSelector = powerbi.data.DataRepetitionSelector;
 
 // powerbi.extensibility.utils.dataview
 import {DataViewTransform}  from "../src/dataViewTransform";
@@ -86,7 +86,7 @@ describe("DataViewTransform", () => {
 
     describe("groupValues", () => {
         it("the identity should be set correctly", () => {
-            const identity: DataViewScopeIdentity = getIdentity(),
+            const identity: DataRepetitionSelector = getIdentity(),
                 valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity)];
 
             const columnGroups: DataViewValueColumnGroup[] = DataViewTransform.groupValues(valueColumn);
@@ -95,7 +95,7 @@ describe("DataViewTransform", () => {
         });
 
         it("group name and the groupName of source should be the same", () => {
-            const identity: DataViewScopeIdentity = getIdentity(),
+            const identity: DataRepetitionSelector = getIdentity(),
                 groupName: string = "TestGroupName",
                 valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity, groupName)];
 
@@ -105,7 +105,7 @@ describe("DataViewTransform", () => {
         });
 
         it("group name and the displayName of source should be the same", () => {
-            const identity: DataViewScopeIdentity = getIdentity(),
+            const identity: DataRepetitionSelector = getIdentity(),
                 valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity)],
                 displayName: string = valueColumn[0].source.displayName as string;
 
@@ -116,7 +116,7 @@ describe("DataViewTransform", () => {
     });
 });
 
-function getDataViewValueColumn(identity?: DataViewScopeIdentity, groupName?: string): DataViewValueColumn {
+function getDataViewValueColumn(identity?: DataRepetitionSelector, groupName?: string): DataViewValueColumn {
     return {
         identity,
         source: {
@@ -127,7 +127,7 @@ function getDataViewValueColumn(identity?: DataViewScopeIdentity, groupName?: st
     };
 }
 
-function getIdentity(): DataViewScopeIdentity {
+function getIdentity(): DataRepetitionSelector {
     return {
         expr: {},
         key: "TestKey",

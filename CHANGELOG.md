@@ -1,3 +1,7 @@
+## 2.1.0
+* Update packages to fix vulnerabilities
+* API 2.1.0 support
+
 ## 1.4.1
 * FIX: Was removed auto-generated element that negatively impacts on a visual test infrastructure
 
