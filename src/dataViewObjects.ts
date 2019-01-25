@@ -29,71 +29,69 @@ import IDataViewObject = powerbi.DataViewObject;
 import DataViewObjects = powerbi.DataViewObjects;
 import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifier;
 import Fill = powerbi.Fill;
-import {DataViewObject} from "./dataViewObject";
+import * as DataViewObject from "./dataViewObject";
 
-export module DataViewObjects {
     /** Gets the value of the given object/property pair. */
-    export function getValue<T>(
-        objects: DataViewObjects,
-        propertyId: DataViewObjectPropertyIdentifier,
-        defaultValue?: T): T {
+export function getValue<T>(
+    objects: DataViewObjects,
+    propertyId: DataViewObjectPropertyIdentifier,
+    defaultValue?: T): T {
 
-        if (!objects) {
-            return defaultValue;
-        }
-
-        return DataViewObject.getValue(
-            objects[propertyId.objectName],
-            propertyId.propertyName,
-            defaultValue);
+    if (!objects) {
+        return defaultValue;
     }
 
-    /** Gets an object from objects. */
-    export function getObject(
-        objects: DataViewObjects,
-        objectName: string,
-        defaultValue?: IDataViewObject): IDataViewObject {
+    return DataViewObject.getValue(
+        objects[propertyId.objectName],
+        propertyId.propertyName,
+        defaultValue);
+}
 
-        if (objects && objects[objectName]) {
-            return objects[objectName];
-        }
+/** Gets an object from objects. */
+export function getObject(
+    objects: DataViewObjects,
+    objectName: string,
+    defaultValue?: IDataViewObject): IDataViewObject {
+
+    if (objects && objects[objectName]) {
+        return objects[objectName];
+    }
+
+    return defaultValue;
+}
+
+/** Gets the solid color from a fill property. */
+export function getFillColor(
+    objects: DataViewObjects,
+    propertyId: DataViewObjectPropertyIdentifier,
+    defaultColor?: string): string {
+
+    const value: Fill = getValue(objects, propertyId);
+
+    if (!value || !value.solid) {
+        return defaultColor;
+    }
+
+    return value.solid.color;
+}
+
+export function getCommonValue(
+    objects: DataViewObjects,
+    propertyId: DataViewObjectPropertyIdentifier,
+    defaultValue?: any): any {
+
+    const value: any = getValue(objects, propertyId, defaultValue);
+
+    if (value && (value as Fill).solid) {
+        return (value as Fill).solid.color;
+    }
+
+    if (value === undefined
+        || value === null
+        || (typeof value === "object" && !(value as Fill).solid)) {
 
         return defaultValue;
     }
 
-    /** Gets the solid color from a fill property. */
-    export function getFillColor(
-        objects: DataViewObjects,
-        propertyId: DataViewObjectPropertyIdentifier,
-        defaultColor?: string): string {
-
-        const value: Fill = getValue(objects, propertyId);
-
-        if (!value || !value.solid) {
-            return defaultColor;
-        }
-
-        return value.solid.color;
-    }
-
-    export function getCommonValue(
-        objects: DataViewObjects,
-        propertyId: DataViewObjectPropertyIdentifier,
-        defaultValue?: any): any {
-
-        const value: any = getValue(objects, propertyId, defaultValue);
-
-        if (value && (value as Fill).solid) {
-            return (value as Fill).solid.color;
-        }
-
-        if (value === undefined
-            || value === null
-            || (typeof value === "object" && !(value as Fill).solid)) {
-
-            return defaultValue;
-        }
-
-        return value;
-    }
+    return value;
 }

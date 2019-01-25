@@ -30,8 +30,7 @@ import DataView = powerbi.DataView;
 import EnumerateVisualObjectInstancesOptions = powerbi.EnumerateVisualObjectInstancesOptions;
 import VisualObjectInstanceEnumeration = powerbi.VisualObjectInstanceEnumeration;
 import VisualObjectInstance = powerbi.VisualObjectInstance;
-import {DataViewObject} from "./dataViewObject";
-import {DataViewObjects} from "./dataViewObjects";
+import * as DataViewObjects from "./dataViewObjects";
 
 export interface DataViewProperty {
     [propertyName: string]: DataViewObjectPropertyIdentifier;

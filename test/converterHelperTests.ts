@@ -34,7 +34,7 @@ import DataView = powerbi.DataView;
 
 // powerbi.extensibility.utils.dataview
 import {converterHelper} from "../src/converterHelper";
-import {DataViewTransform}  from "../src/dataViewTransform";
+import * as DataViewTransform  from "../src/dataViewTransform";
 
 describe("converterHelper", () => {
     describe("categoryIsAlsoSeriesRole", () => {

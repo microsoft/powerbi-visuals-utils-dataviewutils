@@ -33,7 +33,7 @@ import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
 import DataRepetitionSelector = powerbi.data.DataRepetitionSelector;
 
 // powerbi.extensibility.utils.dataview
-import {DataViewTransform}  from "../src/dataViewTransform";
+import * as DataViewTransform  from "../src/dataViewTransform";
 
 describe("DataViewTransform", () => {
     describe("createValueColumns", () => {

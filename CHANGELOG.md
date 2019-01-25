@@ -1,3 +1,8 @@
+## 2.1.1
+* Remove internal modules
+* Add jsnext:main
+* set sideEffects: false
+
 ## 2.1.0
 * Update packages to fix vulnerabilities
 * API 2.1.0 support
