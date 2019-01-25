@@ -32,8 +32,8 @@ import  DataViewCategoryColumn    = powerbi.DataViewCategoryColumn;
 import DataViewValueColumn = powerbi.DataViewValueColumn;
 
 // powerbi.extensibility.utils.dataview
-import {DataRoleHelper} from "../src/dataRoleHelper";
-import {DataViewTransform}  from "../src/dataViewTransform";
+import * as DataRoleHelper from "../src/dataRoleHelper";
+import * as DataViewTransform  from "../src/dataViewTransform";
 
 describe("DataRoleHelper", () => {
     describe("getMeasureIndexOfRole", () => {

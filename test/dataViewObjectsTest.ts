@@ -32,7 +32,7 @@ import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifi
 import DataViewObjectsPBI = powerbi.DataViewObjects;
 
 // powerbi.extensibility.utils.dataview
-import {DataViewObjects}  from "../src/dataViewObjects";
+import * as DataViewObjects  from "../src/dataViewObjects";
 
 describe("DataViewObjects", () => {
     const fillColor: string = "green",

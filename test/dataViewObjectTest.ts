@@ -29,7 +29,8 @@ import powerbi from "powerbi-visuals-api";
 import IDataViewObject = powerbi.DataViewObject;
 
 // powerbi.extensibility.utils.dataview
-import {DataViewObject}  from "../src/dataViewObject";
+import * as DataViewObject  from "../src/dataViewObject";
+
 describe("DataViewObject", () => {
     const fontSizePropertyName: string = "fontSize",
         fillColorPropertyName: string = "fillColor",

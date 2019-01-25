@@ -34,7 +34,6 @@ import { Config, ConfigOptions } from "karma";
 const testRecursivePath = "test/**/*.ts";
 const srcOriginalRecursivePath = "src/**/*.ts";
 const srcRecursivePath = "lib/**/*.js";
-const srcCssRecursivePath = "lib/**/*.css";
 const coverageFolder = "coverage";
 
 process.env.CHROME_BIN = require("puppeteer").executablePath();
@@ -46,8 +45,13 @@ module.exports = (config: Config) => {
         reporters: [
             "progress",
             "coverage",
-            "karma-remap-istanbul"
+            "coverage-istanbul"
         ],
+        coverageIstanbulReporter: {
+            reports: ["html", "lcovonly", "text-summary"],
+            combineBrowserReports: true,
+            fixWebpackSourcePaths: true
+        },
         singleRun: true,
         plugins: [
             "karma-remap-istanbul",
@@ -56,12 +60,12 @@ module.exports = (config: Config) => {
             "karma-webpack",
             "karma-jasmine",
             "karma-sourcemap-loader",
-            "karma-chrome-launcher"
+            "karma-chrome-launcher",
+            "karma-coverage-istanbul-reporter"
         ],
         files: [
             "node_modules/jquery/dist/jquery.min.js",
             "node_modules/jasmine-jquery/lib/jasmine-jquery.js",
-            srcCssRecursivePath,
             srcRecursivePath,
             testRecursivePath,
             {
@@ -84,7 +88,7 @@ module.exports = (config: Config) => {
         ],
         preprocessors: {
             [testRecursivePath]: ["webpack"],
-            [srcRecursivePath]: ["webpack", "sourcemap", "coverage"]
+            [srcRecursivePath]: ["webpack", "coverage"]
         },
         typescriptPreprocessor: {
             options: tsconfig.compilerOptions

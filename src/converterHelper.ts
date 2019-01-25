@@ -32,7 +32,7 @@ import MiscellaneousTypeDescriptor = powerbi.MiscellaneousTypeDescriptor;
 import DataView = powerbi.DataView;
 
 // powerbi.extensibility.utils.dataview
-import {DataRoleHelper} from "./dataRoleHelper";
+import * as DataRoleHelper from "./dataRoleHelper";
 
 export module converterHelper {
     export function categoryIsAlsoSeriesRole(dataView: DataViewCategorical, seriesRoleName: string, categoryRoleName: string): boolean {

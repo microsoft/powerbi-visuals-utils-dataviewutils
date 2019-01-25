@@ -23,7 +23,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-import {validationHelper}  from "../src/validationHelper";
+import * as validationHelper from "../src/validationHelper";
 describe("validationHelper", () => {
     it("valid URLs supported protocols and extensions", () => {
         expect(validationHelper.isImageUrlAllowed("https://someHost/someTestImage.PnG")).toBe(true);
