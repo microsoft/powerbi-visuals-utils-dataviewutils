@@ -27,7 +27,7 @@
 import powerbi from "powerbi-visuals-api";
 import DataViewCategorical = powerbi.DataViewCategorical;
 import DataViewMetadata = powerbi.DataViewMetadata;
-import DataRepetitionSelector = powerbi.data.DataRepetitionSelector;
+import CustomVisualOpaqueIdentity = powerbi.visuals.CustomVisualOpaqueIdentity;
 import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
 import MiscellaneousTypeDescriptor = powerbi.MiscellaneousTypeDescriptor;
 import DataView = powerbi.DataView;
@@ -276,7 +276,7 @@ class DataViewBuilder {
 
     private metadata: DataViewMetadata;
 
-    private categoryIdentities: DataRepetitionSelector[];
+    private categoryIdentities: CustomVisualOpaqueIdentity[];
 
     private values: any[];
 
