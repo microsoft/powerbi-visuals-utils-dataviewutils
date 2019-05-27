@@ -23,33 +23,28 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+export function isImageUrlAllowed(url: string): boolean {
+    // Excludes all URLs that don't contain .gif .jpg .png or .svg extensions and don't start from "http(s)://".
+    // Base64 incoded images are allowable too.
+    return (/^https?:\/\/.+\.(gif|jpg|png|svg)$/i).test(url) || (/^data:image\/(gif|jpeg|png|svg\+xml);base64,/i).test(url);
+}
 
-module powerbi.extensibility.utils.dataview {
-    export module validationHelper {
-        export function isImageUrlAllowed(url: string): boolean {
-            // Excludes all URLs that don't contain .gif .jpg .png or .svg extensions and don't start from "http(s)://".
-            // Base64 incoded images are allowable too.
-            return (/^https?:\/\/.+\.(gif|jpg|png|svg)$/i).test(url) || (/^data:image\/(gif|jpeg|png|svg\+xml);base64,/i).test(url);
+export function isFileImage(url: string, imageCheckResultCallBack: (isImage: boolean, contentType: string) => void) {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (request.readyState !== this.HEADERS_RECEIVED) {
+            return;
         }
 
-        export function isFileImage(url: string, imageCheckResultCallBack: (isImage: boolean, contentType: string) => void) {
-            let request = new XMLHttpRequest();
-            request.onreadystatechange = function () {
-                if (request.readyState !== this.HEADERS_RECEIVED) {
-                    return;
-                }
+        let contentType = request.getResponseHeader("Content-Type"),
+            supportedTypes = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
 
-                let contentType = request.getResponseHeader("Content-Type"),
-                supportedTypes = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
-
-                if (supportedTypes.indexOf(contentType) > -1) {
-                    return imageCheckResultCallBack(true, contentType);
-                }
-
-                return imageCheckResultCallBack(false, contentType);
-            };
-            request.open("HEAD", url, true);
-            request.send();
+        if (supportedTypes.indexOf(contentType) > -1) {
+            return imageCheckResultCallBack(true, contentType);
         }
-    }
+
+        return imageCheckResultCallBack(false, contentType);
+    };
+    request.open("HEAD", url, true);
+    request.send();
 }

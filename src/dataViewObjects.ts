@@ -23,75 +23,75 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+// powerbi
+import powerbi from "powerbi-visuals-api";
+import IDataViewObject = powerbi.DataViewObject;
+import DataViewObjects = powerbi.DataViewObjects;
+import DataViewObjectPropertyIdentifier = powerbi.DataViewObjectPropertyIdentifier;
+import Fill = powerbi.Fill;
+import * as DataViewObject from "./dataViewObject";
 
-module powerbi.extensibility.utils.dataview {
-    // powerbi
-    import IDataViewObject = powerbi.DataViewObject;
+    /** Gets the value of the given object/property pair. */
+export function getValue<T>(
+    objects: DataViewObjects,
+    propertyId: DataViewObjectPropertyIdentifier,
+    defaultValue?: T): T {
 
-    export module DataViewObjects {
-        /** Gets the value of the given object/property pair. */
-        export function getValue<T>(
-            objects: DataViewObjects,
-            propertyId: DataViewObjectPropertyIdentifier,
-            defaultValue?: T): T {
-
-            if (!objects) {
-                return defaultValue;
-            }
-
-            return DataViewObject.getValue(
-                objects[propertyId.objectName],
-                propertyId.propertyName,
-                defaultValue);
-        }
-
-        /** Gets an object from objects. */
-        export function getObject(
-            objects: DataViewObjects,
-            objectName: string,
-            defaultValue?: IDataViewObject): IDataViewObject {
-
-            if (objects && objects[objectName]) {
-                return objects[objectName];
-            }
-
-            return defaultValue;
-        }
-
-        /** Gets the solid color from a fill property. */
-        export function getFillColor(
-            objects: DataViewObjects,
-            propertyId: DataViewObjectPropertyIdentifier,
-            defaultColor?: string): string {
-
-            const value: Fill = getValue(objects, propertyId);
-
-            if (!value || !value.solid) {
-                return defaultColor;
-            }
-
-            return value.solid.color;
-        }
-
-        export function getCommonValue(
-            objects: DataViewObjects,
-            propertyId: DataViewObjectPropertyIdentifier,
-            defaultValue?: any): any {
-
-            const value: any = getValue(objects, propertyId, defaultValue);
-
-            if (value && (value as Fill).solid) {
-                return (value as Fill).solid.color;
-            }
-
-            if (value === undefined
-                || value === null
-                || (typeof value === "object" && !(value as Fill).solid)) {
-
-                return defaultValue;
-            }
-
-            return value;
-        }
+    if (!objects) {
+        return defaultValue;
     }
+
+    return DataViewObject.getValue(
+        objects[propertyId.objectName],
+        propertyId.propertyName,
+        defaultValue);
+}
+
+/** Gets an object from objects. */
+export function getObject(
+    objects: DataViewObjects,
+    objectName: string,
+    defaultValue?: IDataViewObject): IDataViewObject {
+
+    if (objects && objects[objectName]) {
+        return objects[objectName];
+    }
+
+    return defaultValue;
+}
+
+/** Gets the solid color from a fill property. */
+export function getFillColor(
+    objects: DataViewObjects,
+    propertyId: DataViewObjectPropertyIdentifier,
+    defaultColor?: string): string {
+
+    const value: Fill = getValue(objects, propertyId);
+
+    if (!value || !value.solid) {
+        return defaultColor;
+    }
+
+    return value.solid.color;
+}
+
+export function getCommonValue(
+    objects: DataViewObjects,
+    propertyId: DataViewObjectPropertyIdentifier,
+    defaultValue?: any): any {
+
+    const value: any = getValue(objects, propertyId, defaultValue);
+
+    if (value && (value as Fill).solid) {
+        return (value as Fill).solid.color;
+    }
+
+    if (value === undefined
+        || value === null
+        || (typeof value === "object" && !(value as Fill).solid)) {
+
+        return defaultValue;
+    }
+
+    return value;
 }

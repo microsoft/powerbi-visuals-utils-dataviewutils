@@ -24,98 +24,93 @@
  *  THE SOFTWARE.
  */
 
-/// <reference path="_references.ts"/>
+// powerbi
+import powerbi from "powerbi-visuals-api";
+import IDataViewObject = powerbi.DataViewObject;
 
-module powerbi.extensibility.utils.dataview.test {
-    // powerbi
-    import IDataViewObject = powerbi.DataViewObject;
+// powerbi.extensibility.utils.dataview
+import * as DataViewObject  from "../src/dataViewObject";
 
-    // powerbi.extensibility.utils.dataview
-    import DataViewObject = powerbi.extensibility.utils.dataview.DataViewObject;
+describe("DataViewObject", () => {
+    const fontSizePropertyName: string = "fontSize",
+        fillColorPropertyName: string = "fillColor",
+        fontSize: string = "11em",
+        fillColor: string = "green";
 
-    describe("DataViewObject", () => {
-        const fontSizePropertyName: string = "fontSize",
-            fillColorPropertyName: string = "fillColor",
-            fontSize: string = "11em",
-            fillColor: string = "green";
+    function getDataViewObject(
+        fontSize: any,
+        fillColor: string): IDataViewObject {
 
-        function getDataViewObject(
-            fontSize: any,
-            fillColor: string): IDataViewObject {
+        return {
+            [fontSizePropertyName]: fontSize,
+            [fillColorPropertyName]: { solid: { color: fillColor } }
+        };
+    }
 
-            return {
-                [fontSizePropertyName]: fontSize,
-                [fillColorPropertyName]: { solid: { color: fillColor } }
-            };
-        }
+    describe("getValue", () => {
+        it("should return the default value if the object is undefined", () => {
+            const actualFontSize: string = DataViewObject.getValue(
+                undefined,
+                undefined,
+                fontSize);
 
-        describe("getValue", () => {
-            it("should return the default value if the object is undefined", () => {
-                const actualFontSize: string = DataViewObject.getValue(
-                    undefined,
-                    undefined,
-                    fontSize);
-
-                expect(actualFontSize).toBe(fontSize);
-            });
-
-            it("should return the default value if the property isn't available in the object", () => {
-                const object: IDataViewObject = getDataViewObject(fontSize, fontSize);
-
-                const actualFontSize: string = DataViewObject.getValue(
-                    object,
-                    "Power BI",
-                    fontSize);
-
-                expect(actualFontSize).toBe(fontSize);
-            });
+            expect(actualFontSize).toBe(fontSize);
         });
 
-        describe("getFillColorByPropertyName", () => {
-            it("should return a default color if the object is undefined", () => {
-                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
-                    undefined,
-                    undefined,
-                    fillColor);
+        it("should return the default value if the property isn't available in the object", () => {
+            const object: IDataViewObject = getDataViewObject(fontSize, fontSize);
 
-                expect(actualFillColor).toBe(fillColor);
-            });
+            const actualFontSize: string = DataViewObject.getValue(
+                object,
+                "Power BI",
+                fontSize);
 
-            it("should return a default color if property isn't available in the object", () => {
-                const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
-
-                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
-                    object,
-                    "Power BI",
-                    fillColor);
-
-                expect(actualFillColor).toBe(fillColor);
-            });
-
-            it("should return a default color if the solid is undefined", () => {
-                const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
-
-                object[fillColorPropertyName]["solid"] = undefined;
-
-                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
-                    object,
-                    fillColorPropertyName,
-                    fillColor);
-
-                expect(actualFillColor).toBe(fillColor);
-            });
-
-            it("should return the color", () => {
-                const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
-
-                const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
-                    object,
-                    fillColorPropertyName);
-
-                expect(actualFillColor).toBe(fillColor);
-            });
+            expect(actualFontSize).toBe(fontSize);
         });
     });
 
+    describe("getFillColorByPropertyName", () => {
+        it("should return a default color if the object is undefined", () => {
+            const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                undefined,
+                undefined,
+                fillColor);
 
-}
+            expect(actualFillColor).toBe(fillColor);
+        });
+
+        it("should return a default color if property isn't available in the object", () => {
+            const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
+
+            const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                object,
+                "Power BI",
+                fillColor);
+
+            expect(actualFillColor).toBe(fillColor);
+        });
+
+        it("should return a default color if the solid is undefined", () => {
+            const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
+
+            object[fillColorPropertyName]["solid"] = undefined;
+
+            const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                object,
+                fillColorPropertyName,
+                fillColor);
+
+            expect(actualFillColor).toBe(fillColor);
+        });
+
+        it("should return the color", () => {
+            const object: IDataViewObject = getDataViewObject(fontSize, fillColor);
+
+            const actualFillColor: string = DataViewObject.getFillColorByPropertyName(
+                object,
+                fillColorPropertyName);
+
+            expect(actualFillColor).toBe(fillColor);
+        });
+    });
+});
