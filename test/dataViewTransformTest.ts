@@ -23,112 +23,114 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+// data
+import powerbi from "powerbi-visuals-api";
+import ISQExpr = powerbi.data.ISQExpr;
+import DataViewValueColumn = powerbi.DataViewValueColumn;
+import DataViewValueColumns = powerbi.DataViewValueColumns;
+import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
+import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
+import CustomVisualOpaqueIdentity = powerbi.visuals.CustomVisualOpaqueIdentity;
 
-/// <reference path="_references.ts"/>
+// powerbi.extensibility.utils.dataview
+import * as DataViewTransform  from "../src/dataViewTransform";
 
-module powerbi.extensibility.utils.dataview.test {
-    // data
-    import ISQExpr = data.ISQExpr;
+describe("DataViewTransform", () => {
+    describe("createValueColumns", () => {
+        it("the grouped function should be defined", () => {
+            const valueColumn: DataViewValueColumn = getDataViewValueColumn();
 
-    // powerbi.extensibility.utils.dataview
-    import DataViewTransform = powerbi.extensibility.utils.dataview.DataViewTransform;
+            const valueColumns: DataViewValueColumns = DataViewTransform.createValueColumns([valueColumn]);
 
-    describe("DataViewTransform", () => {
-        describe("createValueColumns", () => {
-            it("the grouped function should be defined", () => {
-                const valueColumn: DataViewValueColumn = getDataViewValueColumn();
-
-                const valueColumns: DataViewValueColumns = DataViewTransform.createValueColumns([valueColumn]);
-
-                expect(valueColumns.grouped).toBeDefined();
-            });
-
-            it("the identityFields should be set correctly", () => {
-                const valueColumn: DataViewValueColumn = getDataViewValueColumn(),
-                    valueIdentityFields: ISQExpr[] = [{}, {}];
-
-                const valueColumns: DataViewValueColumns = DataViewTransform.createValueColumns(
-                    [valueColumn],
-                    valueIdentityFields);
-
-                expect(valueColumns.identityFields).toBe(valueIdentityFields);
-            });
-
-            it("the source should be set correctly", () => {
-                const valueColumn: DataViewValueColumn = getDataViewValueColumn(),
-                    source: DataViewMetadataColumn = {
-                        displayName: "Test DataView Column"
-                    };
-
-                const valueColumns: DataViewValueColumns = DataViewTransform.createValueColumns(
-                    [valueColumn],
-                    undefined,
-                    source);
-
-                expect(valueColumns.source).toBe(source);
-            });
+            expect(valueColumns.grouped).toBeDefined();
         });
 
-        describe("setGrouped", () => {
-            it("the grouped should be set correctly", () => {
-                const valueColumn: DataViewValueColumn[] = [getDataViewValueColumn()],
-                    groupedResult: DataViewValueColumnGroup[] = [];
+        it("the identityFields should be set correctly", () => {
+            const valueColumn: DataViewValueColumn = getDataViewValueColumn(),
+                valueIdentityFields: ISQExpr[] = [{}, {}];
 
-                DataViewTransform.setGrouped(
-                    valueColumn as DataViewValueColumns,
-                    groupedResult);
+            const valueColumns: DataViewValueColumns = DataViewTransform.createValueColumns(
+                [valueColumn],
+                valueIdentityFields);
 
-                expect((valueColumn as DataViewValueColumns).grouped()).toBe(groupedResult);
-            });
+            expect(valueColumns.identityFields).toBe(valueIdentityFields);
         });
 
-        describe("groupValues", () => {
-            it("the identity should be set correctly", () => {
-                const identity: DataViewScopeIdentity = getIdentity(),
-                    valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity)];
+        it("the source should be set correctly", () => {
+            const valueColumn: DataViewValueColumn = getDataViewValueColumn(),
+                source: DataViewMetadataColumn = {
+                    displayName: "Test DataView Column"
+                };
 
-                const columnGroups: DataViewValueColumnGroup[] = DataViewTransform.groupValues(valueColumn);
+            const valueColumns: DataViewValueColumns = DataViewTransform.createValueColumns(
+                [valueColumn],
+                undefined,
+                source);
 
-                expect(columnGroups[0].identity).toBe(identity);
-            });
-
-            it("group name and the groupName of source should be the same", () => {
-                const identity: DataViewScopeIdentity = getIdentity(),
-                    groupName: string = "TestGroupName",
-                    valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity, groupName)];
-
-                const columnGroups: DataViewValueColumnGroup[] = DataViewTransform.groupValues(valueColumn);
-
-                expect(columnGroups[0].name).toBe(groupName);
-            });
-
-            it("group name and the displayName of source should be the same", () => {
-                const identity: DataViewScopeIdentity = getIdentity(),
-                    valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity)],
-                    displayName: string = valueColumn[0].source.displayName as string;
-
-                const columnGroups: DataViewValueColumnGroup[] = DataViewTransform.groupValues(valueColumn);
-
-                expect(columnGroups[0].name).toBe(displayName);
-            });
+            expect(valueColumns.source).toBe(source);
         });
     });
 
-    function getDataViewValueColumn(identity?: DataViewScopeIdentity, groupName?: string): DataViewValueColumn {
-        return {
-            identity,
-            source: {
-                groupName,
-                displayName: "TestColumn"
-            },
-            values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        };
-    }
+    describe("setGrouped", () => {
+        it("the grouped should be set correctly", () => {
+            const valueColumn: DataViewValueColumn[] = [getDataViewValueColumn()],
+                groupedResult: DataViewValueColumnGroup[] = [];
 
-    function getIdentity(): DataViewScopeIdentity {
-        return {
-            expr: {},
-            key: "TestKey"
-        };
-    }
+            DataViewTransform.setGrouped(
+                valueColumn as DataViewValueColumns,
+                groupedResult);
+
+            expect((valueColumn as DataViewValueColumns).grouped()).toBe(groupedResult);
+        });
+    });
+
+    describe("groupValues", () => {
+        it("the identity should be set correctly", () => {
+            const identity: CustomVisualOpaqueIdentity = getIdentity(),
+                valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity)];
+
+            const columnGroups: DataViewValueColumnGroup[] = DataViewTransform.groupValues(valueColumn);
+
+            expect(columnGroups[0].identity).toBe(identity);
+        });
+
+        it("group name and the groupName of source should be the same", () => {
+            const identity: CustomVisualOpaqueIdentity = getIdentity(),
+                groupName: string = "TestGroupName",
+                valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity, groupName)];
+
+            const columnGroups: DataViewValueColumnGroup[] = DataViewTransform.groupValues(valueColumn);
+
+            expect(columnGroups[0].name).toBe(groupName);
+        });
+
+        it("group name and the displayName of source should be the same", () => {
+            const identity: CustomVisualOpaqueIdentity = getIdentity(),
+                valueColumn: DataViewValueColumn[] = [getDataViewValueColumn(identity)],
+                displayName: string = valueColumn[0].source.displayName as string;
+
+            const columnGroups: DataViewValueColumnGroup[] = DataViewTransform.groupValues(valueColumn);
+
+            expect(columnGroups[0].name).toBe(displayName);
+        });
+    });
+});
+
+function getDataViewValueColumn(identity?: CustomVisualOpaqueIdentity, groupName?: string): DataViewValueColumn {
+    return {
+        identity,
+        source: {
+            groupName,
+            displayName: "TestColumn"
+        },
+        values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    };
+}
+
+function getIdentity(): CustomVisualOpaqueIdentity {
+    return {
+        expr: {},
+        key: "TestKey",
+        kind: null
+    };
 }

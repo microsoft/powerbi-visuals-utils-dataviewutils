@@ -23,58 +23,56 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+// powerbi
+import powerbi from "powerbi-visuals-api";
+import DataViewCategorical = powerbi.DataViewCategorical;
+import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
+import PrimitiveValue = powerbi.PrimitiveValue;
+import MiscellaneousTypeDescriptor = powerbi.MiscellaneousTypeDescriptor;
+import DataView = powerbi.DataView;
 
-module powerbi.extensibility.utils.dataview {
-    // powerbi
-    import DataViewCategorical = powerbi.DataViewCategorical;
-    import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
-    import PrimitiveValue = powerbi.PrimitiveValue;
-    import MiscellaneousTypeDescriptor = powerbi.MiscellaneousTypeDescriptor;
-    import DataView = powerbi.DataView;
+// powerbi.extensibility.utils.dataview
+import * as DataRoleHelper from "./dataRoleHelper";
 
-    // powerbi.extensibility.utils.dataview
-    import DataRoleHelper = powerbi.extensibility.utils.dataview.DataRoleHelper;
+export module converterHelper {
+    export function categoryIsAlsoSeriesRole(dataView: DataViewCategorical, seriesRoleName: string, categoryRoleName: string): boolean {
+        if (dataView.categories && dataView.categories.length > 0) {
+            // Need to pivot data if our category soure is a series role
+            let category = dataView.categories[0];
+            return category.source &&
+                DataRoleHelper.hasRole(category.source, seriesRoleName) &&
+                DataRoleHelper.hasRole(category.source, categoryRoleName);
+        }
 
-    export module converterHelper {
-        export function categoryIsAlsoSeriesRole(dataView: DataViewCategorical, seriesRoleName: string, categoryRoleName: string): boolean {
-            if (dataView.categories && dataView.categories.length > 0) {
-                // Need to pivot data if our category soure is a series role
-                let category = dataView.categories[0];
-                return category.source &&
-                    DataRoleHelper.hasRole(category.source, seriesRoleName) &&
-                    DataRoleHelper.hasRole(category.source, categoryRoleName);
-            }
+        return false;
+    }
 
+    export function getSeriesName(source: DataViewMetadataColumn): PrimitiveValue {
+        return (source.groupName !== undefined)
+            ? source.groupName
+            : source.queryName;
+    }
+
+    export function isImageUrlColumn(column: DataViewMetadataColumn): boolean {
+        let misc = getMiscellaneousTypeDescriptor(column);
+        return misc != null && misc.imageUrl === true;
+    }
+
+    export function isWebUrlColumn(column: DataViewMetadataColumn): boolean {
+        let misc = getMiscellaneousTypeDescriptor(column);
+        return misc != null && misc.webUrl === true;
+    }
+
+    export function getMiscellaneousTypeDescriptor(column: DataViewMetadataColumn): MiscellaneousTypeDescriptor {
+        return column
+            && column.type
+            && column.type.misc;
+    }
+
+    export function hasImageUrlColumn(dataView: DataView): boolean {
+        if (!dataView || !dataView.metadata || !dataView.metadata.columns || !dataView.metadata.columns.length) {
             return false;
         }
-
-        export function getSeriesName(source: DataViewMetadataColumn): PrimitiveValue {
-            return (source.groupName !== undefined)
-                ? source.groupName
-                : source.queryName;
-        }
-
-        export function isImageUrlColumn(column: DataViewMetadataColumn): boolean {
-            let misc = getMiscellaneousTypeDescriptor(column);
-            return misc != null && misc.imageUrl === true;
-        }
-
-        export function isWebUrlColumn(column: DataViewMetadataColumn): boolean {
-            let misc = getMiscellaneousTypeDescriptor(column);
-            return misc != null && misc.webUrl === true;
-        }
-
-        export function getMiscellaneousTypeDescriptor(column: DataViewMetadataColumn): MiscellaneousTypeDescriptor {
-            return column
-                && column.type
-                && column.type.misc;
-        }
-
-        export function hasImageUrlColumn(dataView: DataView): boolean {
-            if (!dataView || !dataView.metadata || !dataView.metadata.columns || !dataView.metadata.columns.length) {
-                return false;
-            }
-            return dataView.metadata.columns.some((column: DataViewMetadataColumn) => isImageUrlColumn(column) === true);
-        }
+        return dataView.metadata.columns.some((column: DataViewMetadataColumn) => isImageUrlColumn(column) === true);
     }
 }
