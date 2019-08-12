@@ -44,7 +44,6 @@ module.exports = (config: Config) => {
         frameworks: ["jasmine"],
         reporters: [
             "progress",
-            "coverage",
             "coverage-istanbul"
         ],
         coverageIstanbulReporter: {
@@ -101,7 +100,8 @@ module.exports = (config: Config) => {
         remapIstanbulReporter: {
             reports: {
                 lcovonly: coverageFolder + "/lcov.info",
-                html: coverageFolder
+                html: coverageFolder,
+                "text-summary": null
             }
         },
         mime: {
