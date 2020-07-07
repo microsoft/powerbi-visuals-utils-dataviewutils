@@ -34,7 +34,6 @@
     "@types/jasmine": "3.5.11",
     "@types/karma": "5.0.0",
     "@types/webpack": "4.41.20",
-    "chalk": "4.1.0",
     "coveralls": "3.1.0",
     "istanbul-instrumenter-loader": "3.0.1",
     "jasmine": "3.5.0",
@@ -57,7 +56,5 @@
     "typescript": "3.9.6",
     "webpack": "4.43.0"
   },
-  "dependencies": {
-    "jquery": "^3.5.1"
-  }
+  "dependencies": {}
 }
