@@ -1,3 +1,7 @@
+## 2.3.0
+* Packages update
+* Vulnerabilities patched
+
 ## 2.2.1
 * Packages update
 
