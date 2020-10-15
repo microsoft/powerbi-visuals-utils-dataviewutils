@@ -34,8 +34,9 @@ export const enum DataViewWildcardMatchingOption {
 }
 
 export function createDataViewWildcardSelector(dataViewWildcardMatchingOption?: DataViewWildcardMatchingOption) {
-    if (dataViewWildcardMatchingOption == null)
+    if (dataViewWildcardMatchingOption == null) {
         dataViewWildcardMatchingOption = DataViewWildcardMatchingOption.InstancesAndTotals;
+    }
 
     let selector = {
         data: [
