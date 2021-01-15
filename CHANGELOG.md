@@ -1,3 +1,7 @@
+## 2.4.1
+* Packages update
+* Vulnerabilities patched
+
 ## 2.4.0
 * Add dataViewWildcard for conditional formatting support
 
