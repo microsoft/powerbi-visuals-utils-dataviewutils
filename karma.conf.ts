@@ -39,7 +39,7 @@ module.exports = (config) => {
     config.set({
         browsers: ["ChromeHeadless"],
         colors: true,
-        frameworks: ["jasmine", "webpack"],
+        frameworks: ["jasmine"],
         reporters: [
             "progress",
             "coverage-istanbul"
