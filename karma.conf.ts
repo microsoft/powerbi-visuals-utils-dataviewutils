@@ -39,7 +39,7 @@ module.exports = (config) => {
     config.set({
         browsers: ["ChromeHeadless"],
         colors: true,
-        frameworks: ["jasmine"],
+        frameworks: ["jasmine", "webpack"],
         reporters: [
             "progress",
             "coverage-istanbul"
@@ -51,7 +51,6 @@ module.exports = (config) => {
         },
         singleRun: true,
         plugins: [
-            "karma-remap-istanbul",
             "karma-coverage",
             "karma-typescript",
             "karma-webpack",
