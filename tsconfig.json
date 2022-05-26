@@ -15,11 +15,6 @@
         "outDir": "./lib"
     },
     "files": [
-        "src/index.ts",
-        "lib/src/index.d.ts"
-    ],
-    "include": [
-        "src/index.ts",
-        "lib/src/index.d.ts"
+        "src/index.ts"
     ]
 }

@@ -6,3 +6,4 @@ test
 karma.conf.ts
 webpack.config.js
 test.webpack.config.js
+lib
