@@ -59,7 +59,6 @@ export class DataViewObjectsParser {
 
     public static parse<T extends DataViewObjectsParser>(dataView: DataView): T {
         const dataViewObjectParser: T = <T>this.getDefault()
-        // const properties: DataViewProperties;
 
         if (!dataView || !dataView.metadata || !dataView.metadata.objects) {
             return dataViewObjectParser;

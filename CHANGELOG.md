@@ -1,4 +1,4 @@
-## 2.5.0
+## 3.0.0
 * Moved to eslint
 * Packages update
 
