@@ -51,7 +51,6 @@ module.exports = (config) => {
         },
         singleRun: true,
         plugins: [
-            "karma-remap-istanbul",
             "karma-coverage",
             "karma-typescript",
             "karma-webpack",

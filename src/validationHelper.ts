@@ -30,13 +30,13 @@ export function isImageUrlAllowed(url: string): boolean {
 }
 
 export function isFileImage(url: string, imageCheckResultCallBack: (isImage: boolean, contentType: string) => void) {
-    let request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState !== this.HEADERS_RECEIVED) {
             return;
         }
 
-        let contentType = request.getResponseHeader("Content-Type"),
+        const contentType = request.getResponseHeader("Content-Type"),
             supportedTypes = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
 
         if (supportedTypes.indexOf(contentType) > -1) {

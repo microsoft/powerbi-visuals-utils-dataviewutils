@@ -39,7 +39,7 @@ export function createValueColumns(
     values: DataViewValueColumn[] = [],
     valueIdentityFields?: ISQExpr[],
     source?: DataViewMetadataColumn): DataViewValueColumns {
-    let result = <DataViewValueColumns>values;
+    const result = <DataViewValueColumns>values;
     setGrouped(result);
 
     if (valueIdentityFields) {
@@ -61,11 +61,11 @@ export function setGrouped(values: DataViewValueColumns, groupedResult?: DataVie
 
 /** Group together the values with a common identity. */
 export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnGroup[] {
-    let groups: DataViewValueColumnGroup[] = [],
-        currentGroup: DataViewValueColumnGroup;
+    const groups: DataViewValueColumnGroup[] = []
+    let currentGroup: DataViewValueColumnGroup;
 
     for (let i = 0, len = values.length; i < len; i++) {
-        let value: DataViewValueColumn = values[i];
+        const value: DataViewValueColumn = values[i];
 
         if (!currentGroup || currentGroup.identity !== value.identity) {
             currentGroup = {
@@ -75,7 +75,7 @@ export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnG
             if (value.identity) {
                 currentGroup.identity = value.identity;
 
-                let source: DataViewMetadataColumn = value.source;
+                const source: DataViewMetadataColumn = value.source;
 
                 // allow null, which will be formatted as (Blank).
                 if (source.groupName !== undefined) {

@@ -33,7 +33,7 @@ export function getValue<T>(object: IDataViewObject, propertyName: string, defau
         return defaultValue;
     }
 
-    let propertyValue = <T>object[propertyName];
+    const propertyValue = <T>object[propertyName];
     if (propertyValue === undefined) {
         return defaultValue;
     }
@@ -43,7 +43,7 @@ export function getValue<T>(object: IDataViewObject, propertyName: string, defau
 
 /** Gets the solid color from a fill property using only a propertyName */
 export function getFillColorByPropertyName(object: IDataViewObject, propertyName: string, defaultColor?: string): string {
-    let value: Fill = getValue(object, propertyName);
+    const value: Fill = getValue(object, propertyName);
     if (!value || !value.solid) {
         return defaultColor;
     }

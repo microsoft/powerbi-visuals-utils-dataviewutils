@@ -35,10 +35,10 @@ export function getMeasureIndexOfRole(grouped: DataViewValueColumnGroup[], roleN
     if (!grouped || !grouped.length) {
         return -1;
     }
-    let firstGroup = grouped[0];
+    const firstGroup = grouped[0];
     if (firstGroup.values && firstGroup.values.length > 0) {
         for (let i = 0, len = firstGroup.values.length; i < len; ++i) {
-            let value = firstGroup.values[i];
+            const value = firstGroup.values[i];
 
             if (value && value.source) {
                 if (hasRole(value.source, roleName)) {
@@ -64,7 +64,7 @@ export function getCategoryIndexOfRole(categories: DataViewCategoryColumn[], rol
 }
 
 export function hasRole(column: DataViewMetadataColumn, name: string): boolean {
-    let roles = column.roles;
+    const roles = column.roles;
     return roles && roles[name];
 }
 

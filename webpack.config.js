@@ -47,16 +47,16 @@ module.exports = {
             {
                 test: /\.json$/,
                 loader: 'json-loader'
-              }
+            }
         ]
     },
     externals: {
         "powerbi-visuals-api": '{}'
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js','.css']
+        extensions: ['.tsx', '.ts', '.js', '.css']
     },
     output: {
-        path: path.resolve(__dirname, ".tmp/test")
+        path: path.resolve(__dirname, '.tmp')
     }
 };
