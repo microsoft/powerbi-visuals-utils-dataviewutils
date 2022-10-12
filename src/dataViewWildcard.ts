@@ -38,7 +38,7 @@ export function createDataViewWildcardSelector(dataViewWildcardMatchingOption?: 
         dataViewWildcardMatchingOption = DataViewWildcardMatchingOption.InstancesAndTotals;
     }
 
-    let selector = {
+    const selector = {
         data: [
             {
                 dataViewWildcard:

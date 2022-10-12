@@ -33,7 +33,7 @@ import MiscellaneousTypeDescriptor = powerbi.MiscellaneousTypeDescriptor;
 import DataView = powerbi.DataView;
 
 // powerbi.extensibility.utils.dataview
-import {converterHelper} from "../src/converterHelper";
+import * as converterHelper from "../src/converterHelper";
 import * as DataViewTransform  from "../src/dataViewTransform";
 
 describe("converterHelper", () => {
