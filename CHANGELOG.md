@@ -1,4 +1,8 @@
 ## 3.0.0
+* Migrated to playwright from puppeter
+* Packages update
+
+## 3.0.0
 * Moved to eslint
 * Packages update
 
