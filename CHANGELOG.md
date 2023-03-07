@@ -1,3 +1,7 @@
+## 6.0.0
+* Packages update
+* Vulnerabilities patched
+
 ## 3.0.0
 * Migrated to playwright from puppeter
 * Packages update
