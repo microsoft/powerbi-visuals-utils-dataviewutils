@@ -1,8 +1,12 @@
+## 6.0.1
+* Packages update
+* Removed coveralls
+
 ## 6.0.0
 * Packages update
 * Vulnerabilities patched
 
-## 3.0.0
+## 3.0.1
 * Migrated to playwright from puppeter
 * Packages update
 
