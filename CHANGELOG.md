@@ -1,3 +1,7 @@
+
+## 6.0.3
+* powerbi-visuals-api update to 5.9.0
+
 ## 6.0.2
 * Vulnerabilities fixed
 
