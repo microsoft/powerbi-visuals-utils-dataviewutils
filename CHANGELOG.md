@@ -1,3 +1,5 @@
+## 6.1.1
+* Packages updated
 
 ## 6.0.3
 * Packages update
