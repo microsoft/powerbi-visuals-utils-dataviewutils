@@ -23,6 +23,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+import { describe, it, expect, beforeEach } from "vitest";
 // powerbi
 import powerbi from "powerbi-visuals-api";
 import DataViewCategorical = powerbi.DataViewCategorical;

@@ -65,7 +65,7 @@ export function getCategoryIndexOfRole(categories: DataViewCategoryColumn[], rol
 
 export function hasRole(column: DataViewMetadataColumn, name: string): boolean {
     const roles = column.roles;
-    return roles && roles[name];
+    return !!(roles && roles[name]);
 }
 
 export function hasRoleInDataView(dataView: DataView, name: string): boolean {
@@ -76,8 +76,8 @@ export function hasRoleInDataView(dataView: DataView, name: string): boolean {
 }
 
 export function hasRoleInValueColumn(valueColumn: DataViewValueColumn, name: string): boolean {
-    return valueColumn
+    return !!(valueColumn
         && valueColumn.source
         && valueColumn.source.roles
-        && (valueColumn.source.roles[name] === true);
+        && (valueColumn.source.roles[name] === true));
 }

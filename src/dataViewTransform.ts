@@ -62,7 +62,7 @@ export function setGrouped(values: DataViewValueColumns, groupedResult?: DataVie
 /** Group together the values with a common identity. */
 export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnGroup[] {
     const groups: DataViewValueColumnGroup[] = []
-    let currentGroup: DataViewValueColumnGroup;
+    let currentGroup: DataViewValueColumnGroup | undefined;
 
     for (let i = 0, len = values.length; i < len; i++) {
         const value: DataViewValueColumn = values[i];
@@ -88,7 +88,7 @@ export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnG
             groups.push(currentGroup);
         }
 
-        currentGroup.values.push(value);
+        currentGroup!.values.push(value);
     }
 
     return groups;

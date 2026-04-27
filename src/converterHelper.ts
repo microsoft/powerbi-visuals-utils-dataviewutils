@@ -49,7 +49,7 @@ export function categoryIsAlsoSeriesRole(dataView: DataViewCategorical, seriesRo
 export function getSeriesName(source: DataViewMetadataColumn): PrimitiveValue {
     return (source.groupName !== undefined)
         ? source.groupName
-        : source.queryName;
+    : <PrimitiveValue>source.queryName;
 }
 
 export function isImageUrlColumn(column: DataViewMetadataColumn): boolean {
@@ -63,9 +63,9 @@ export function isWebUrlColumn(column: DataViewMetadataColumn): boolean {
 }
 
 export function getMiscellaneousTypeDescriptor(column: DataViewMetadataColumn): MiscellaneousTypeDescriptor {
-    return column
+    return <MiscellaneousTypeDescriptor>(column
         && column.type
-        && column.type.misc;
+        && column.type.misc);
 }
 
 export function hasImageUrlColumn(dataView: DataView): boolean {

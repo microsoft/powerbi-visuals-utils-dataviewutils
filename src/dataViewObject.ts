@@ -30,12 +30,12 @@ import Fill = powerbi.Fill;
 
 export function getValue<T>(object: IDataViewObject, propertyName: string, defaultValue?: T): T {
     if (!object) {
-        return defaultValue;
+        return <T>defaultValue;
     }
 
     const propertyValue = <T>object[propertyName];
     if (propertyValue === undefined) {
-        return defaultValue;
+        return <T>defaultValue;
     }
 
     return propertyValue;
@@ -45,8 +45,8 @@ export function getValue<T>(object: IDataViewObject, propertyName: string, defau
 export function getFillColorByPropertyName(object: IDataViewObject, propertyName: string, defaultColor?: string): string {
     const value: Fill = getValue(object, propertyName);
     if (!value || !value.solid) {
-        return defaultColor;
+        return <string>defaultColor;
     }
 
-    return value.solid.color;
+    return <string>value.solid.color;
 }

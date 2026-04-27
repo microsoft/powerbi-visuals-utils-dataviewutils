@@ -24,6 +24,7 @@
  *  THE SOFTWARE.
  */
 
+import { describe, it, expect } from "vitest";
 // powerbi.extensibility.utils.dataview
 import * as DataViewWildcard from "../src/dataViewWildcard";
 

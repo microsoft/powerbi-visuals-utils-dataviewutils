@@ -24,6 +24,7 @@
  *  THE SOFTWARE.
  */
 
+import { describe, it, expect } from "vitest";
 // powerbi
 import powerbi from "powerbi-visuals-api";
 import IDataViewObject = powerbi.DataViewObject;

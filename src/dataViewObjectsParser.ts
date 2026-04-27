@@ -42,6 +42,7 @@ export interface DataViewProperties {
 
 export class DataViewObjectsParser {
     private static InnumerablePropertyPrefix: RegExp = /^_/;
+    [propertyName: string]: any;
 
     public static getDefault() {
         return new this();
@@ -67,10 +68,12 @@ export class DataViewObjectsParser {
         const properties: DataViewProperties = dataViewObjectParser.getProperties();
 
         for (const objectName in properties) {
-            for (const propertyName in properties[objectName]) {
-                const defaultValue: any = dataViewObjectParser[objectName][propertyName];
+            const objectProperties = dataViewObjectParser[objectName] as Record<string, any>;
 
-                dataViewObjectParser[objectName][propertyName] = DataViewObjects.getCommonValue(
+            for (const propertyName in properties[objectName]) {
+                const defaultValue: any = objectProperties[propertyName];
+
+                objectProperties[propertyName] = DataViewObjects.getCommonValue(
                     dataView.metadata.objects,
                     properties[objectName][propertyName],
                     defaultValue);
@@ -96,7 +99,7 @@ export class DataViewObjectsParser {
 
         const instance: VisualObjectInstance = {
             objectName: options.objectName,
-            selector: null,
+            selector: <any>null,
             properties: {}
         };
 
@@ -117,7 +120,8 @@ export class DataViewObjectsParser {
 
         objectNames.forEach((objectName: string) => {
             if (DataViewObjectsParser.isPropertyEnumerable(objectName)) {
-                const propertyNames: string[] = Object.keys(this[objectName]);
+                const objectProperties = this[objectName] as Record<string, unknown>;
+                const propertyNames: string[] = Object.keys(objectProperties);
 
                 properties[objectName] = {};
 

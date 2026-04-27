@@ -38,7 +38,7 @@ export function getValue<T>(
     defaultValue?: T): T {
 
     if (!objects) {
-        return defaultValue;
+        return <T>defaultValue;
     }
 
     return DataViewObject.getValue(
@@ -57,7 +57,7 @@ export function getObject(
         return objects[objectName];
     }
 
-    return defaultValue;
+    return <IDataViewObject>defaultValue;
 }
 
 /** Gets the solid color from a fill property. */
@@ -69,10 +69,10 @@ export function getFillColor(
     const value: Fill = getValue(objects, propertyId);
 
     if (!value || !value.solid) {
-        return defaultColor;
+        return <string>defaultColor;
     }
 
-    return value.solid.color;
+    return <string>value.solid.color;
 }
 
 export function getCommonValue(
@@ -83,7 +83,7 @@ export function getCommonValue(
     const value: any = getValue(objects, propertyId, defaultValue);
 
     if (value && (value as Fill).solid) {
-        return (value as Fill).solid.color;
+        return ((value as Fill).solid as { color?: string }).color ?? defaultValue;
     }
 
     if (value === undefined
