@@ -8,11 +8,7 @@ module.exports = [
             "dist/**",
             "coverage/**",
             "test/**",
-            "lib/**",
-            ".eslintrc.js",
-            "karma.conf.ts",
-            "webpack.config.js",
-            "test.webpack.config.js"
+            "lib/**"
         ]
     },
     {

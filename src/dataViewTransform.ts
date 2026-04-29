@@ -88,7 +88,7 @@ export function groupValues(values: DataViewValueColumn[]): DataViewValueColumnG
             groups.push(currentGroup);
         }
 
-        currentGroup!.values.push(value);
+        currentGroup.values.push(value);
     }
 
     return groups;

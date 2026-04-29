@@ -49,7 +49,7 @@ export function categoryIsAlsoSeriesRole(dataView: DataViewCategorical, seriesRo
 export function getSeriesName(source: DataViewMetadataColumn): PrimitiveValue {
     return (source.groupName !== undefined)
         ? source.groupName
-    : <PrimitiveValue>source.queryName;
+        : <PrimitiveValue>source.queryName;
 }
 
 export function isImageUrlColumn(column: DataViewMetadataColumn): boolean {

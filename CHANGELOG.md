@@ -1,4 +1,14 @@
 
+## 7.0.0
+* Migrated test framework from Karma + Jasmine to Vitest
+* Replaced Webpack with Vite
+* Migrated ESLint config to flat config format (ESLint 10)
+* Updated devDependencies: `@typescript-eslint` v8, `eslint` v10, `typescript` v6, `powerbi-visuals-api` v5.11
+* Fixed `moduleResolution` from deprecated `"node"` to `"bundler"`
+* Removed unused `experimentalDecorators` and `emitDecoratorMetadata` from tsconfig
+* Improved type safety in `dataViewObjectsParser` and `dataViewTransform`
+* **Breaking change:** `getCommonValue` now returns `defaultValue` when `solid.color` is `undefined` (previously returned `undefined`)
+
 ## 6.0.3
 * Packages update
 * Removed `isImageUrlAllowed` and `isFileImage` functions

@@ -42,7 +42,6 @@ export interface DataViewProperties {
 
 export class DataViewObjectsParser {
     private static InnumerablePropertyPrefix: RegExp = /^_/;
-    [propertyName: string]: any;
 
     public static getDefault() {
         return new this();
@@ -68,10 +67,10 @@ export class DataViewObjectsParser {
         const properties: DataViewProperties = dataViewObjectParser.getProperties();
 
         for (const objectName in properties) {
-            const objectProperties = dataViewObjectParser[objectName] as Record<string, any>;
+            const objectProperties = (dataViewObjectParser as unknown as Record<string, unknown>)[objectName] as Record<string, unknown>;
 
             for (const propertyName in properties[objectName]) {
-                const defaultValue: any = objectProperties[propertyName];
+                const defaultValue: unknown = objectProperties[propertyName];
 
                 objectProperties[propertyName] = DataViewObjects.getCommonValue(
                     dataView.metadata.objects,
@@ -91,7 +90,7 @@ export class DataViewObjectsParser {
         dataViewObjectParser: DataViewObjectsParser,
         options: EnumerateVisualObjectInstancesOptions): VisualObjectInstanceEnumeration {
 
-        const dataViewProperties: DataViewProperties = dataViewObjectParser && dataViewObjectParser[options.objectName];
+        const dataViewProperties = (dataViewObjectParser as unknown as Record<string, unknown>)?.[options.objectName] as DataViewProperties | undefined;
 
         if (!dataViewProperties) {
             return [];
@@ -120,7 +119,7 @@ export class DataViewObjectsParser {
 
         objectNames.forEach((objectName: string) => {
             if (DataViewObjectsParser.isPropertyEnumerable(objectName)) {
-                const objectProperties = this[objectName] as Record<string, unknown>;
+                const objectProperties = (this as unknown as Record<string, unknown>)[objectName] as Record<string, unknown>;
                 const propertyNames: string[] = Object.keys(objectProperties);
 
                 properties[objectName] = {};
