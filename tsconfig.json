@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "allowJs": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
         "declaration": true,
         "sourceMap": true,
         "module": "ES2020",
