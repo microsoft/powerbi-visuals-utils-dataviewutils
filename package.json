@@ -1,6 +1,6 @@
 {
   "name": "powerbi-visuals-utils-dataviewutils",
-  "version": "6.1.0",
+  "version": "7.0.0",
   "description": "dataviewutils",
   "main": "lib/index.js",
   "module": "lib/index.js",
